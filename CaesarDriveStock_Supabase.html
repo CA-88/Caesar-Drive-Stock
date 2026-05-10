@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+<title>Caesar Drive Stock</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"/>
+
+<!-- ════════════════════════════════════════════════════
+     ⚙️  SUPABASE 配置 — 已预填，无需修改
+     ════════════════════════════════════════════════════ -->
+<script>
+var SUPABASE_URL = "https://vwpfomfsqoerpmsnidil.supabase.co";
+var LOGO_B64 = "data:image/png;base64,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";
+
+var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3cGZvbWZzcW9lcnBtc25pZGlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODAwNzMsImV4cCI6MjA5Mzk1NjA3M30.GIjyja-gOxITN2ceFSRayNI1XEM8l7QAHumvAnOWoPU";
+</script>
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- html5-qrcode for native mobile QR scan -->
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:#eef2f8;color:#1e293b;min-height:100vh}
+input,select,button,textarea{font-family:inherit}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#4a8fff!important}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#c0cce0;border-radius:2px}
+.page{display:none}.page.active{display:block}
+#page-main{display:none;flex-direction:column;height:100vh;overflow:hidden}
+#page-main.active{display:flex}
+#page-main>.content{flex:1;overflow-y:auto;padding:14px 13px;max-width:980px;margin:0 auto;width:100%;box-sizing:border-box}
+#page-main>.header{position:static;flex-shrink:0}
+#page-main>.tab-bar{position:static;flex-shrink:0}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center;padding:12px;overflow-y:auto}
+.mo.active{display:flex}
+.mb{background:#fff;border:1px solid #d0dae8;border-radius:16px;padding:22px;width:460px;max-width:100%;max-height:92vh;overflow-y:auto}
+.field label{display:block;font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+.field input,.field select,.field textarea{width:100%;background:#f8fafc;border:1px solid #d0dae8;border-radius:7px;padding:9px 11px;color:#1e293b;font-size:15px}
+.field textarea{resize:vertical;min-height:55px}
+.gr{display:grid;gap:10px}
+.btn{padding:9px 16px;border:none;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;transition:opacity .15s;-webkit-tap-highlight-color:transparent}
+.btn:active{opacity:.75}
+.bb{background:linear-gradient(135deg,#4a8fff,#9b6dff);color:#fff}
+.bg{background:linear-gradient(135deg,#00c853,#009624);color:#fff}
+.bo{background:linear-gradient(135deg,#ff8c00,#e07000);color:#fff}
+.br{background:#ff4d6d;color:#fff}
+.bd{background:#e8eef6;color:#64748b;border:1px solid #d0dae8}
+.bpu{background:linear-gradient(135deg,#9b6dff,#7a4fff);color:#fff}
+.bw{width:100%}.bxl{padding:14px 0;font-size:16px;border-radius:12px}
+.msg{margin:8px 0;padding:9px 13px;border-radius:8px;font-size:13px}
+.ok{background:#dcfce7;border:1px solid #86efac;color:#16a34a}
+.er{background:#fee2e2;border:1px solid #fca5a5;color:#dc2626}
+.wn{background:#fff7ed;border:1px solid #fed7aa;color:#ea580c}
+.badge{background:#dbeafe;color:#2563eb;border-radius:5px;padding:2px 7px;font-size:12px;font-weight:600;white-space:nowrap}
+.card{background:#fff;border:1px solid #d0dae8;border-radius:12px;padding:18px}
+.st{font-size:13px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.header{background:#fff;border-bottom:1px solid #d0dae8;padding:10px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
+.tab-bar{display:flex;background:#f1f5fb;border-bottom:1px solid #d0dae8;overflow-x:auto;-webkit-overflow-scrolling:touch;position:sticky;top:54px;z-index:99}
+.tb{background:none;border:none;padding:8px 6px;cursor:pointer;font-size:12px;font-weight:600;white-space:nowrap;color:#64748b;border-bottom:2px solid transparent;font-family:inherit;text-align:center;line-height:1.3;flex:1;min-width:0}
+.tb.active{color:#4a8fff;border-bottom-color:#4a8fff}
+.content{padding:14px 13px;max-width:980px;margin:0 auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{padding:8px 10px;text-align:left;color:#64748b;font-size:12px;font-weight:600;white-space:nowrap;background:#f1f5fb}
+td{padding:8px 10px;vertical-align:middle}
+tr{border-top:1px solid #e8eef6}
+tr:hover{background:#eff6ff!important}
+.toasts{position:fixed;top:12px;right:12px;z-index:1200;max-width:300px}
+.photo-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover;border:1px solid #d0dae8;cursor:pointer}
+.photo-ph{width:40px;height:40px;border-radius:6px;border:1px dashed #d0dae8;display:flex;align-items:center;justify-content:center;font-size:16px;color:#94a3b8;background:#f5f8fc}
+.wh-badge{display:inline-flex;align-items:center;gap:3px;background:#fff7ed;color:#ea580c;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:600}
+.loc-badge{display:inline-flex;align-items:center;gap:3px;background:#dcfce7;color:#16a34a;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:600;font-family:monospace}
+.sup-tag{display:inline-flex;align-items:center;gap:3px;background:#ede9fe;color:#7c3aed;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:600}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid #e2e8f0;border-top-color:#4a8fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sku-wrap{position:relative;display:inline-block}
+.sku-dd{position:absolute;top:calc(100% + 2px);left:0;z-index:600;background:#fff;border:1px solid #d0dae8;border-radius:8px;min-width:220px;max-height:190px;overflow-y:auto;box-shadow:0 6px 20px rgba(0,0,0,.15);display:none}
+.sku-dd.open{display:block}
+.sku-dd-hdr{padding:5px 10px;font-size:10px;color:#94a3b8;text-transform:uppercase;background:#f8fafc;border-bottom:1px solid #f1f5fb;border-radius:8px 8px 0 0}
+.sku-item{padding:7px 10px;cursor:pointer;border-bottom:1px solid #f1f5fb}
+.sku-item:last-child{border-bottom:none}
+.sku-item:hover{background:#eff6ff}
+/* QR Scanner */
+#qr-reader{width:100%!important}
+#qr-reader video{width:100%!important;border-radius:8px}
+#qr-reader img{display:none}
+@media(max-width:620px){.hide-m{display:none!important}.content{padding:10px 8px}}
+</style>
+
+<script>
+window.addEventListener('DOMContentLoaded', function(){
+  ['loading-logo','setup-logo','login-logo'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&typeof LOGO_B64!=='undefined')el.src=LOGO_B64;
+  });
+});
+</script>
+</head>
+<body>
+
+<div class="toasts" id="toasts"></div>
+
+<!-- LOADING -->
+<div class="page active" id="page-loading">
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center">
+<div style="text-align:center;padding:32px">
+  <img id="loading-logo" src="" style="width:72px;height:72px;object-fit:contain;margin-bottom:14px;border-radius:12px;border:1px solid #e2e8f0"/>
+  <div style="font-size:17px;font-weight:700;margin-bottom:6px">正在连接云端...</div>
+  <div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Connecting to Supabase...</div>
+  <div style="font-size:13px;color:#64748b;margin-bottom:20px">Caesar Drive Stock</div>
+  <div class="spin" style="width:24px;height:24px;border-width:3px;margin:0 auto"></div>
+  <div id="load-st" style="font-size:12px;color:#94a3b8;margin-top:14px"></div>
+  <button class="btn bd" style="margin-top:18px;display:none" id="load-retry-btn" onclick="location.reload()">🔄 重新载入</button>
+</div></div></div>
+
+<!-- SETUP -->
+<div class="page" id="page-setup">
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px">
+<div style="width:360px;padding:32px 24px;background:#fff;border:1px solid #d0dae8;border-radius:20px;box-shadow:0 4px 24px rgba(37,99,235,.08)">
+  <div style="text-align:center;margin-bottom:22px">
+    <img id="setup-logo" src="" style="width:60px;height:60px;object-fit:contain;margin-bottom:8px;border-radius:10px;border:1px solid #e2e8f0"/>
+    <div style="font-size:18px;font-weight:700">首次设定 Initial Setup</div>
+    <div style="font-size:12px;color:#64748b;margin-top:6px;line-height:1.6">建立管理员 Admin 账号<br/><span style="background:#dbeafe;color:#2563eb;padding:2px 8px;border-radius:20px;font-size:11px">☁️ Supabase · 多设备共享</span></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div class="field"><label>名称 Name *</label><input id="s-name" placeholder="e.g. 王生 / Mr Wong"/></div>
+    <div class="field"><label>用户名 Username *</label><input id="s-user" placeholder="e.g. admin" style="font-family:monospace"/></div>
+    <div class="field"><label>密码 Password * (min 4)</label><input id="s-pw" type="password"/></div>
+    <div class="field"><label>确认密码 Confirm Password *</label><input id="s-pw2" type="password"/></div>
+  </div>
+  <div id="s-msg"></div>
+  <button class="btn bb bw bxl" style="margin-top:14px" onclick="doSetup()">🚀 建立账号 Create Account</button>
+</div></div></div>
+
+<!-- LOGIN -->
+<div class="page" id="page-login">
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px">
+<div style="width:360px;padding:32px 24px;background:#fff;border:1px solid #d0dae8;border-radius:20px;box-shadow:0 4px 24px rgba(37,99,235,.08)">
+  <div style="text-align:center;margin-bottom:24px">
+    <img id="login-logo" src="" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px;border-radius:10px;border:1px solid #e2e8f0"/>
+    <div style="font-size:18px;font-weight:700">Caesar Drive Stock</div>
+    <div style="font-size:12px;color:#64748b;margin-top:3px">零件库存管理系统</div>
+    <div style="margin-top:7px;display:inline-block;background:#dcfce7;color:#16a34a;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600">☁️ Supabase 多设备版</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div class="field"><label>用户名 Username</label><input id="l-u" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="field"><label>密码 Password</label><input id="l-p" type="password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+  </div>
+  <div id="l-msg"></div>
+  <button class="btn bb bw bxl" style="margin-top:14px" onclick="doLogin()">登入 Login</button>
+  <button class="btn bd bw" style="margin-top:8px;font-size:13px" onclick="openFP()">🔑 忘记密码 Forgot Password</button>
+  <div id="l-info" style="margin-top:10px;padding:8px;background:#f1f5fb;border-radius:7px;font-size:12px;color:#64748b;text-align:center"></div>
+</div></div></div>
+
+<!-- MAIN -->
+<div class="page" id="page-main">
+  <div class="header" id="hdr"></div>
+  <div class="tab-bar" id="tbar"></div>
+  <div class="content" id="content"></div>
+</div>
+
+<!-- MODALS -->
+<div class="mo" id="m-fp"><div class="mb" style="width:340px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><b>🔑 忘记密码</b><button onclick="cm('m-fp')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div class="field"><label>用户名 *</label><input id="fp-u" style="font-family:monospace"/></div>
+  <div id="fp-msg"></div>
+  <button id="fp-btn" class="btn bb bw" style="margin-top:12px" onclick="doFP()">📨 提交申请</button>
+</div></div>
+
+<div class="mo" id="m-item-edit"><div class="mb" style="width:500px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><b id="ie-title">✏️ 编辑货品</b><button onclick="cm('m-item-edit')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:11px;background:#f1f5fb;border-radius:10px">
+    <div id="ie-photo-preview" style="flex-shrink:0"></div>
+    <div><div style="font-size:13px;font-weight:600;margin-bottom:6px">🖼️ 货品照片</div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn bd" style="font-size:12px;padding:5px 9px" onclick="document.getElementById('ie-photo-file').click()">📁 上载</button>
+        <button class="btn bd" style="font-size:12px;padding:5px 9px" onclick="openCamera()">📷 拍照</button>
+        <button id="ie-photo-del" class="btn br" style="font-size:12px;padding:5px 9px;display:none" onclick="clearItemPhoto()">🗑️</button>
+      </div>
+      <input id="ie-photo-file" type="file" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)"/>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="gr" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>料号 SKU *</label><input id="ie-sku" style="font-family:monospace" oninput="this.value=this.value.toUpperCase()"/></div>
+      <div class="field"><label>名称 Name *</label><input id="ie-name"/></div>
+    </div>
+    <div class="gr" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="field"><label>分类 Category</label><input id="ie-cat"/></div>
+      <div class="field"><label>单位 Unit</label><input id="ie-unit" placeholder="粒"/></div>
+      <div class="field"><label>最低警戒 Min Qty</label><input id="ie-min" type="number" min="0" placeholder="0"/></div>
+    </div>
+    <div class="gr" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>仓库 Warehouse</label><select id="ie-wh"></select></div>
+      <div class="field"><label>位置 📍 Location</label><input id="ie-loc" placeholder="e.g. A排3格 / A-Row-3"/></div>
+    </div>
+    <div class="gr" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>供应商 Supplier</label><select id="ie-sup"></select></div>
+      <div class="field"><label>单价 Unit Price $</label><input id="ie-cost" type="number" min="0" step="0.01"/></div>
+    </div>
+    <div class="field"><label>备注 Remarks</label><input id="ie-note"/></div>
+  </div>
+  <div id="ie-msg"></div>
+  <div style="display:flex;gap:8px;margin-top:13px">
+    <button class="btn bd" style="flex:1" onclick="cm('m-item-edit')">取消 Cancel</button>
+    <button class="btn bb" style="flex:2" onclick="doSaveItem()">💾 储存 Save</button>
+  </div>
+</div></div>
+
+<div class="mo" id="m-item"><div class="mb" style="width:500px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><b>📦 货品详情</b><button onclick="cm('m-item')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div id="item-detail"></div>
+</div></div>
+
+<div class="mo" id="m-del-item"><div class="mb" style="width:310px;text-align:center">
+  <div style="font-size:36px;margin-bottom:10px">🗑️</div>
+  <div style="font-size:16px;font-weight:700;margin-bottom:8px">确认删除货品？</div>
+  <div id="del-item-lbl" style="font-size:13px;color:#64748b;margin-bottom:8px"></div>
+  <div style="font-size:12px;color:#ff4d6d;margin-bottom:16px;padding:7px;background:#fee2e2;border-radius:7px">⚠️ 删除后不可恢复</div>
+  <div style="display:flex;gap:8px"><button class="btn bd" style="flex:1" onclick="cm('m-del-item')">取消</button><button class="btn br" style="flex:2" onclick="doDelItem()">🗑️ 确认删除</button></div>
+</div></div>
+
+<div class="mo" id="m-camera"><div class="mb" style="width:380px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><b>📷 拍照</b><button onclick="closeCamera()" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div style="border-radius:10px;overflow:hidden;background:#000;margin-bottom:11px"><video id="cam-video" autoplay playsinline muted style="width:100%;max-height:260px;object-fit:cover;display:block"></video></div>
+  <div id="cam-msg" style="font-size:12px;color:#64748b;margin-bottom:10px;text-align:center"></div>
+  <div style="display:flex;gap:8px"><button class="btn bd" style="flex:1" onclick="closeCamera()">取消</button><button class="btn bg" style="flex:2" onclick="takePhoto()">📸 拍照 Take Photo</button></div>
+</div></div>
+
+<!-- QR SCAN MODAL — uses html5-qrcode -->
+<div class="mo" id="m-scan"><div class="mb" style="width:380px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <b>📷 扫描 QR / Scan QR Code</b>
+    <button onclick="closeScanner()" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button>
+  </div>
+  <div id="qr-reader" style="border-radius:10px;overflow:hidden;margin-bottom:11px"></div>
+  <div id="qr-scan-msg" style="font-size:13px;color:#64748b;margin-bottom:8px;text-align:center;min-height:20px"></div>
+  <div style="font-size:12px;color:#94a3b8;margin-bottom:7px">或手动输入料号 Or type SKU manually:</div>
+  <div style="display:flex;gap:8px">
+    <input id="scan-manual" placeholder="SKU..." style="flex:1;background:#f8fafc;border:1px solid #d0dae8;border-radius:7px;padding:9px 11px;color:#1e293b;font-size:14px;outline:none;font-family:monospace" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doManualScan()"/>
+    <button class="btn bb" onclick="doManualScan()">确认 OK</button>
+  </div>
+</div></div>
+
+<div class="mo" id="m-photo" onclick="cm('m-photo')" style="background:rgba(0,0,0,.87)">
+  <div style="position:relative"><img id="photo-big" style="max-width:92vw;max-height:88vh;border-radius:10px;display:block"/><button onclick="cm('m-photo')" style="position:absolute;top:-12px;right:-12px;background:#333;border:none;color:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:16px">✕</button></div>
+</div>
+
+<div class="mo" id="m-qr"><div class="mb" style="width:310px;text-align:center">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><b>🏷️ QR 标签</b><button onclick="cm('m-qr')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div id="qr-content"></div>
+  <div style="display:flex;gap:7px;margin-top:13px">
+    <button class="btn bd" style="flex:1;font-size:13px" onclick="window.print()">🖨️ 打印</button>
+    <button class="btn bb" style="flex:1;font-size:13px" onclick="cm('m-qr');openScanner('search')">📷 扫描</button>
+  </div>
+</div></div>
+
+<div class="mo" id="m-wh"><div class="mb" style="width:400px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><b id="wh-title">🏭 仓库</b><button onclick="cm('m-wh')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="field"><label>仓库名称 Warehouse Name *</label><input id="wh-name"/></div>
+    <div class="gr" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>地址 Address</label><input id="wh-addr"/></div>
+      <div class="field"><label>负责人 PIC</label><input id="wh-mgr"/></div>
+    </div>
+    <div class="field"><label>备注 Remarks</label><textarea id="wh-note"></textarea></div>
+  </div>
+  <div id="wh-msg"></div>
+  <div style="display:flex;gap:8px;margin-top:13px"><button class="btn bd" style="flex:1" onclick="cm('m-wh')">取消</button><button class="btn bb" style="flex:2" onclick="doSaveWH()">💾 储存</button></div>
+</div></div>
+
+<div class="mo" id="m-sup"><div class="mb" style="width:440px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><b id="sup-title">🏢 供应商</b><button onclick="cm('m-sup')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="gr" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>名称 Name *</label><input id="sup-name"/></div>
+      <div class="field"><label>联络人 Contact</label><input id="sup-contact"/></div>
+    </div>
+    <div class="gr" style="grid-template-columns:1fr 1fr">
+      <div class="field"><label>电话 Phone</label><input id="sup-phone"/></div>
+      <div class="field"><label>电邮 Email</label><input id="sup-email"/></div>
+    </div>
+    <div class="field"><label>备注 Remarks</label><textarea id="sup-note"></textarea></div>
+  </div>
+  <div id="sup-msg"></div>
+  <div style="display:flex;gap:8px;margin-top:13px"><button class="btn bd" style="flex:1" onclick="cm('m-sup')">取消</button><button class="btn bb" style="flex:2" onclick="doSaveSupplier()">💾 储存</button></div>
+</div></div>
+
+<div class="mo" id="m-eu"><div class="mb" style="width:370px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><b>✏️ 编辑账号</b><button onclick="cm('m-eu')" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:20px">✕</button></div>
+  <div id="eu-uname" style="font-size:12px;color:#64748b;margin-bottom:11px;font-family:monospace"></div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="field"><label>显示名称 Display Name *</label><input id="eu-name"/></div>
+    <div class="field"><label>角色 Role</label><select id="eu-role"><option value="staff">👷 员工</option><option value="admin">👑 管理员</option></select></div>
+    <div class="field"><label>新密码 New Password (留空=不变)</label><input id="eu-pw" type="password"/></div>
+    <div class="field"><label>确认新密码</label><input id="eu-pw2" type="password"/></div>
+  </div>
+  <div id="eu-msg"></div>
+  <div style="display:flex;gap:8px;margin-top:13px"><button class="btn bd" style="flex:1" onclick="cm('m-eu')">取消</button><button class="btn bb" style="flex:2" onclick="doSaveUser()">储存</button></div>
+</div></div>
+
+<div class="mo" id="m-du"><div class="mb" style="width:300px;text-align:center">
+  <div style="font-size:34px;margin-bottom:10px">🗑️</div>
+  <div style="font-size:15px;font-weight:700;margin-bottom:4px">确认删除账号？</div>
+  <div id="du-lbl" style="font-size:13px;color:#64748b;margin-bottom:16px"></div>
+  <div style="display:flex;gap:8px"><button class="btn bd" style="flex:1" onclick="cm('m-du')">取消</button><button class="btn br" style="flex:1" onclick="doDelUser()">确认删除</button></div>
+</div></div>
+
+<script>
+// ════════════════════════════════════════════════════
+// SUPABASE JS SDK
+// ════════════════════════════════════════════════════
+var _sb = null;
+function getSB(){
+  if(!_sb) _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  return _sb;
+}
+
+// ── UTILS ──────────────────────────────────────────────
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms);})}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmtT(ts){if(!ts)return'—';var d=new Date(ts);return d.toLocaleDateString('zh-HK',{year:'numeric',month:'2-digit',day:'2-digit'})+' '+d.toLocaleTimeString('zh-HK',{hour:'2-digit',minute:'2-digit'});}
+function fmtS(ts){if(!ts)return'—';var d=new Date(ts);return d.toLocaleDateString('zh-HK',{month:'2-digit',day:'2-digit'})+' '+d.toLocaleTimeString('zh-HK',{hour:'2-digit',minute:'2-digit'});}
+function om(id){document.getElementById(id).classList.add('active');}
+function cm(id){document.getElementById(id).classList.remove('active');}
+function toast(msg,cls){var d=document.createElement('div');d.className='msg '+(cls||'ok');d.style.cssText='margin-bottom:8px;box-shadow:0 4px 20px rgba(0,0,0,.55)';d.textContent=msg;document.getElementById('toasts').appendChild(d);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},4000);}
+function setLS(msg){var el=document.getElementById('load-st');if(el)el.textContent=msg;}
+function getW(id){return warehouses.find(function(w){return w.id===id;})||null;}
+function getSup(id){return suppliers.find(function(s){return s.id===id;})||null;}
+
+// ── SUPABASE STORAGE ────────────────────────────────
+async function sget(k){
+  try{
+    var sb=getSB();
+    var res=await sb.from('inv').select('value').eq('key',k).limit(1).single();
+    if(res.error&&res.error.code==='PGRST116')return null;
+    if(res.error){console.warn('sget',k,res.error);return null;}
+    return res.data?res.data.value:null;
+  }catch(e){console.warn('sget',k,e);return null;}
+}
+async function sset(k,v){
+  try{
+    var sb=getSB();
+    var res=await sb.from('inv').upsert({key:k,value:v,updated_at:Date.now()},{onConflict:'key'});
+    if(res.error){console.warn('sset',k,res.error);return false;}
+    return true;
+  }catch(e){console.warn('sset',k,e);return false;}
+}
+async function sdel(k){
+  try{var sb=getSB();await sb.from('inv').delete().eq('key',k);}catch(e){}
+}
+async function saveCore(){return sset('inv_core',{users:users,ids:ids,pwReqs:pwReqs,suppliers:suppliers,warehouses:warehouses});}
+async function saveItems(){
+  var slim=inventory.map(function(i){return {id:i.id,sku:i.sku,name:i.name,category:i.category,qty:i.qty,unit:i.unit,minQty:i.minQty,lastIn:i.lastIn,lastOut:i.lastOut,supplierId:i.supplierId,unitCost:i.unitCost,warehouseId:i.warehouseId,location:i.location,note:i.note};});
+  return sset('inv_items',slim);
+}
+async function saveLogs(){if(logs.length>10000)logs=logs.slice(0,10000);return sset('inv_logs',logs);}
+async function savePhoto(sku,b64){
+  if(!b64){await sdel('inv_photo:'+sku);photoCache[sku]=null;return true;}
+  photoCache[sku]=b64;return sset('inv_photo:'+sku,b64);
+}
+async function loadPhoto(sku){
+  if(photoCache[sku]!==undefined)return photoCache[sku];
+  var v=await sget('inv_photo:'+sku);
+  photoCache[sku]=v||null;return photoCache[sku];
+}
+async function saveAll(){
+  var slim=inventory.map(function(i){return {id:i.id,sku:i.sku,name:i.name,category:i.category,qty:i.qty,unit:i.unit,minQty:i.minQty,lastIn:i.lastIn,lastOut:i.lastOut,supplierId:i.supplierId,unitCost:i.unitCost,warehouseId:i.warehouseId,location:i.location,note:i.note};});
+  if(logs.length>10000)logs=logs.slice(0,10000);
+  var ok1=await sset('inv_core',{users:users,ids:ids,pwReqs:pwReqs,suppliers:suppliers,warehouses:warehouses});
+  if(!ok1){toast('⚠️ 储存失败 (core)，请再试','er');return false;}
+  var ok2=await sset('inv_items',slim);
+  if(!ok2){toast('⚠️ 储存失败 (items)，请再试','er');return false;}
+  var ok3=await sset('inv_logs',logs);
+  if(!ok3){toast('⚠️ 储存失败 (logs)，请再试','er');return false;}
+  lastSync=Date.now();
+  return true;
+}
+
+// ── DATA ───────────────────────────────────────────────
+var users=[],inventory=[],logs=[],ids={u:2,i:4,s:1,w:1},pwReqs=[],suppliers=[],warehouses=[];
+var photoCache={};
+var me=null,curTab=0,lastSync=null;
+var editingItemId=null,deletingItemId=null,editingUserId=null,deletingUserId=null;
+var editingSupplierId=null,editingWhId=null;
+var scanTarget=null,cameraStream=null;
+var html5QrScanner=null;
+var currentItemPhoto=null;
+var inMode='new',excelRows=[];
+var outRows=[],outRowId=0;
+var logF={type:'',from:'',to:'',q:''};
+
+
+async function loadAll(){
+  setLS('载入账号...');
+  var core=await sget('inv_core');
+  if(core){users=core.users||[];ids=core.ids||{u:2,i:4,s:1,w:1};pwReqs=core.pwReqs||[];suppliers=core.suppliers||[];warehouses=core.warehouses||[];}
+  setLS('载入货品...');
+  var items=await sget('inv_items');
+  if(items)inventory=items;
+  setLS('载入记录...');
+  var ls=await sget('inv_logs');
+  if(ls)logs=ls;
+  lastSync=Date.now();
+}
+function addLog(type,item,qty,rem,extra){
+  var now=Date.now();
+  var entry={id:now+Math.floor(Math.random()*10000),ts:now,type:type,sku:item.sku,name:item.name,qty:qty,remark:rem||'',user:(me&&me.name)||'—'};
+  if(extra)Object.assign(entry,extra);
+  logs.unshift(entry);
+}
+
+// ── AUTH ───────────────────────────────────────────────
+async function init(){
+  showPage('loading');
+  var t=setTimeout(function(){
+    setLS('连接超时，请检查网络或 Supabase 设置');
+    var btn=document.getElementById('load-retry-btn');
+    if(btn)btn.style.display='';
+  },15000);
+  try{
+    await loadAll();
+    clearTimeout(t);
+    if(!users||users.length===0)showPage('setup');
+    else showLogin();
+  }catch(e){
+    clearTimeout(t);
+    setLS('载入失败: '+e.message);
+    document.getElementById('load-retry-btn').style.display='';
+  }
+}
+function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.getElementById('page-'+id).classList.add('active');}
+function showLogin(){
+  var pc=pwReqs.filter(function(r){return r.status==='待处理';}).length;
+  document.getElementById('l-info').innerHTML='共 '+users.length+' 个账号'+(pc>0?' · <span style="color:#ff8c00">⚠️ '+pc+' 个重置申请</span>':'');
+  showPage('login');
+}
+async function doSetup(){
+  var name=document.getElementById('s-name').value.trim(),user=document.getElementById('s-user').value.trim(),pw=document.getElementById('s-pw').value,pw2=document.getElementById('s-pw2').value,msg=document.getElementById('s-msg');
+  if(!name||!user||!pw){msg.innerHTML='<div class="msg er">请填写所有栏位</div>';return;}
+  if(pw!==pw2){msg.innerHTML='<div class="msg er">两次密码不一致</div>';return;}
+  if(pw.length<4){msg.innerHTML='<div class="msg er">密码最少4位</div>';return;}
+  var existing=await sget('inv_core');
+  if(existing&&existing.users&&existing.users.length>0){msg.innerHTML='<div class="msg er">系统已被初始化，请刷新页面</div>';setTimeout(function(){location.reload();},2000);return;}
+  users=[{id:1,username:user,password:pw,name:name,role:'admin',avatar:'👑'}];
+  ids={u:2,i:1,s:1,w:1};inventory=[];
+  msg.innerHTML='<div class="msg ok">⏳ 储存到 Supabase...</div>';
+  var ok=await saveAll();
+  if(!ok){msg.innerHTML='<div class="msg er">❌ 储存失败，请检查 Supabase 配置</div>';return;}
+  msg.innerHTML='<div class="msg ok">✅ 完成！正在进入...</div>';
+  setTimeout(showLogin,800);
+}
+function doLogin(){
+  var u=document.getElementById('l-u').value.trim(),p=document.getElementById('l-p').value;
+  var f=users.find(function(x){return x.username===u&&x.password===p;});
+  if(f){me=f;renderMain();showPage('main');}
+  else document.getElementById('l-msg').innerHTML='<div class="msg er" style="margin-top:8px">用户名或密码错误</div>';
+}
+function doLogout(){me=null;curTab=0;photoCache={};showLogin();}
+function openFP(){document.getElementById('fp-u').value='';document.getElementById('fp-msg').innerHTML='';document.getElementById('fp-btn').style.display='';om('m-fp');}
+async function doFP(){
+  var u=document.getElementById('fp-u').value.trim(),msg=document.getElementById('fp-msg');
+  if(!u){msg.innerHTML='<div class="msg er">请输入用户名</div>';return;}
+  var f=users.find(function(x){return x.username===u;});
+  if(!f){msg.innerHTML='<div class="msg er">找不到此用户名</div>';return;}
+  if(pwReqs.find(function(r){return r.username===u&&r.status==='待处理';})){msg.innerHTML='<div class="msg er">已有待处理申请</div>';return;}
+  pwReqs.unshift({id:Date.now(),username:f.username,name:f.name,ts:Date.now(),status:'待处理'});
+  await saveCore();
+  msg.innerHTML='<div class="msg ok">✅ 申请已提交！</div>';document.getElementById('fp-btn').style.display='none';
+}
+
+// ── LAYOUT ─────────────────────────────────────────────
+var TA=['📊 总览<br/><span style="font-size:10px;font-weight:400">Overview</span>','➕ 入库<br/><span style="font-size:10px;font-weight:400">Stock In</span>','➖ 取货<br/><span style="font-size:10px;font-weight:400">Stock Out</span>','🔄 调整<br/><span style="font-size:10px;font-weight:400">Adjust</span>','📈 报表<br/><span style="font-size:10px;font-weight:400">Report</span>','🏢 供应商<br/><span style="font-size:10px;font-weight:400">Supplier</span>','🏭 仓库<br/><span style="font-size:10px;font-weight:400">Warehouse</span>','🔧 管理<br/><span style="font-size:10px;font-weight:400">Manage</span>','👥 账号<br/><span style="font-size:10px;font-weight:400">Accounts</span>','📋 记录<br/><span style="font-size:10px;font-weight:400">Logs</span>','📊 Excel批量<br/><span style="font-size:10px;font-weight:400">Bulk Import</span>'];
+var TS=['📊 总览<br/><span style="font-size:10px;font-weight:400">Overview</span>','➕ 入库<br/><span style="font-size:10px;font-weight:400">Stock In</span>','➖ 取货<br/><span style="font-size:10px;font-weight:400">Stock Out</span>','🔑 密码<br/><span style="font-size:10px;font-weight:400">Password</span>','📋 记录<br/><span style="font-size:10px;font-weight:400">Logs</span>','📊 Excel批量<br/><span style="font-size:10px;font-weight:400">Bulk Import</span>'];
+function renderMain(){renderHdr();renderTabs();renderTab();}
+function renderHdr(){
+  var low=inventory.filter(function(i){return i.qty<=i.minQty&&i.minQty>0;});
+  var pc=pwReqs.filter(function(r){return r.status==='待处理';}).length;
+  document.getElementById('hdr').innerHTML=
+    '<div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4a8fff,#9b6dff);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">🔩</div>'+
+    '<div><div style="font-size:14px;font-weight:700;font-family:monospace">CAESAR DRIVE STOCK</div><div style="font-size:10px;color:#64748b">☁️ Supabase · '+esc(fmtS(lastSync))+'</div></div>'+
+    '<div style="margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end">'+
+    (low.length>0?'<span style="background:#fee2e2;border-radius:20px;padding:2px 8px;font-size:12px;color:#ff4d6d;font-weight:600">⚠️ '+low.length+'</span>':'')+
+    (me.role==='admin'&&pc>0?'<span onclick="setTab(8)" style="background:#fff7ed;border-radius:20px;padding:2px 8px;font-size:12px;color:#ff8c00;font-weight:600;cursor:pointer">🔑 '+pc+'</span>':'')+
+    '<button class="btn bd" style="font-size:12px;padding:4px 9px" onclick="openScanner(\'search\')">📷 扫描<br/><span style="font-size:10px;font-weight:400">Scan QR</span></button>'+
+    '<button class="btn bd" style="font-size:12px;padding:4px 9px" onclick="refreshData()">刷新<br/><span style="font-size:10px;font-weight:400">Refresh</span></button>'+
+    '<span style="font-size:18px">'+me.avatar+'</span>'+
+    '<div class="hide-m" style="font-size:13px"><div style="font-weight:600">'+esc(me.name)+'</div><div style="color:'+(me.role==='admin'?'#d97706':'#4a8fff')+';font-size:11px">'+(me.role==='admin'?'👑 Admin':'👷 Staff')+'</div></div>'+
+    '<button class="btn bd" style="font-size:12px;padding:4px 9px" onclick="doLogout()">登出<br/><span style="font-size:10px;font-weight:400">Logout</span></button></div>';
+}
+function renderTabs(){
+  var tabs=me.role==='admin'?TA:TS;
+  document.getElementById('tbar').innerHTML=tabs.map(function(t,i){return '<button class="tb'+(i===curTab?' active':'')+'" onclick="setTab('+i+')">'+t+'</button>';}).join('');
+}
+function setTab(i){curTab=i;renderTabs();renderTab();}
+function renderTab(){
+  var t=curTab,a=me.role==='admin',c=document.getElementById('content');
+  if(t===0)c.innerHTML=rOverview();
+  else if(t===1)c.innerHTML=rIn();
+  else if(t===2)c.innerHTML=rOut();
+  else if(t===3&&a)c.innerHTML=rAdj();
+  else if(t===3&&!a)c.innerHTML=rChgPw();
+  else if(t===4&&a)c.innerHTML=rReport();
+  else if(t===5&&a)c.innerHTML=rSuppliers();
+  else if(t===6&&a)c.innerHTML=rWarehouses();
+  else if(t===7&&a)c.innerHTML=rManage();
+  else if(t===8&&a)c.innerHTML=rUsers();
+  
+  else if(t===10&&a)c.innerHTML=rExcelImport();
+  else c.innerHTML=rLogs();
+  setTimeout(function(){showOutStock();showAdjStock();loadVisiblePhotos();if(t===1){inNewRows=[];inNewRowId=0;setTimeout(function(){addInNewRow();},10);}if(t===2){initOutRows();}},80);
+}
+async function refreshData(){
+  await loadAll();
+  if(me){var u=users.find(function(x){return x.id===me.id;});if(!u){doLogout();return;}me=u;renderMain();}
+  toast('☁️ 数据已刷新','ok');
+}
+
+// ── QR SCANNER (html5-qrcode) ────────────────────────────────
+function openScanner(target){
+  scanTarget=target;
+  document.getElementById('scan-manual').value='';
+  document.getElementById('qr-scan-msg').textContent='正在启动摄像头... Starting camera...';
+  om('m-scan');
+  // 延迟一下让 modal 先显示
+  setTimeout(function(){startHtml5Scanner();},200);
+}
+
+function startHtml5Scanner(){
+  var readerEl=document.getElementById('qr-reader');
+  readerEl.innerHTML='';
+  try{
+    html5QrScanner=new Html5Qrcode('qr-reader');
+    var config={fps:10,qrbox:{width:220,height:140},aspectRatio:1.5};
+    html5QrScanner.start(
+      {facingMode:'environment'},
+      config,
+      function(decodedText){
+        // 成功读取 QR
+        var sku=decodedText.trim().toUpperCase();
+        document.getElementById('qr-scan-msg').innerHTML='<span style="color:#16a34a;font-weight:700">✅ 已识别: '+esc(sku)+'</span>';
+        closeScanner();
+        handleScanResult(sku);
+      },
+      function(err){}
+    ).then(function(){
+      document.getElementById('qr-scan-msg').textContent='对准 QR 码 Point camera at QR code';
+    }).catch(function(err){
+      document.getElementById('qr-scan-msg').innerHTML='<span style="color:#ff4d6d">无法启动摄像头: '+esc(err)+'</span><br/>请用手动输入';
+    });
+  }catch(e){
+    document.getElementById('qr-scan-msg').innerHTML='<span style="color:#ff4d6d">QR 扫描器错误，请手动输入</span>';
+  }
+}
+
+function closeScanner(){
+  if(html5QrScanner){
+    html5QrScanner.stop().catch(function(){});
+    html5QrScanner=null;
+  }
+  cm('m-scan');
+}
+
+function handleScanResult(sku){
+  var item=inventory.find(function(i){return i.sku===sku;});
+  if(scanTarget==='in'){if(item)prefillInExist(item.id);else toast('找不到料号: '+sku,'wn');}
+  else if(scanTarget==='out'){if(item)prefillOut(item.id);else toast('找不到料号: '+sku,'er');}
+  else if(scanTarget==='search'){var el=document.getElementById('search-in');if(el){el.value=sku;filterTable();}}
+}
+
+function doManualScan(){
+  var sku=document.getElementById('scan-manual').value.trim().toUpperCase();if(!sku)return;
+  closeScanner();
+  handleScanResult(sku);
+}
+
+// ── CAMERA (for photos) ─────────────────────────────────────────────
+function openCamera(){
+  navigator.mediaDevices&&navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})
+    .then(function(s){cameraStream=s;document.getElementById('cam-video').srcObject=s;document.getElementById('cam-msg').textContent='';om('m-camera');})
+    .catch(function(){document.getElementById('cam-msg').textContent='无法存取镜头，请用上载照片';om('m-camera');});
+}
+function closeCamera(){if(cameraStream){cameraStream.getTracks().forEach(function(t){t.stop();});cameraStream=null;}cm('m-camera');}
+async function takePhoto(){
+  var v=document.getElementById('cam-video'),c=document.createElement('canvas');
+  c.width=v.videoWidth||640;c.height=v.videoHeight||480;
+  c.getContext('2d').drawImage(v,0,0);
+  currentItemPhoto=await resizePhoto(c.toDataURL('image/jpeg',.85));
+  updatePhotoPreview();closeCamera();
+}
+function handlePhotoUpload(inp){
+  var f=inp.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=async function(e){currentItemPhoto=await resizePhoto(e.target.result);updatePhotoPreview();};
+  r.readAsDataURL(f);
+}
+function resizePhoto(dataUrl){
+  return new Promise(function(res){
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas');
+      var sc=Math.min(1,200/Math.max(img.width,img.height));
+      c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      res(c.toDataURL('image/jpeg',.65));
+    };
+    img.src=dataUrl;
+  });
+}
+function updatePhotoPreview(){
+  var el=document.getElementById('ie-photo-preview'),del=document.getElementById('ie-photo-del');
+  if(!el)return;
+  if(currentItemPhoto){
+    el.innerHTML='<img src="'+currentItemPhoto+'" class="photo-thumb" style="width:60px;height:60px" onclick="viewPhoto(\''+currentItemPhoto+'\')"/>';
+    if(del)del.style.display='';
+  }else{
+    el.innerHTML='<div class="photo-ph" style="width:60px;height:60px">📷</div>';
+    if(del)del.style.display='none';
+  }
+}
+function clearItemPhoto(){currentItemPhoto=null;updatePhotoPreview();}
+function viewPhoto(src){document.getElementById('photo-big').src=src;om('m-photo');}
+async function loadVisiblePhotos(){
+  var els=document.querySelectorAll('[data-photo-sku]');
+  for(var i=0;i<els.length;i++){
+    var el=els[i],sku=el.getAttribute('data-photo-sku');
+    if(!sku)continue;
+    try{
+      var photo=await loadPhoto(sku);
+      if(photo&&el.parentNode){
+        el.outerHTML='<img src="'+photo+'" class="photo-thumb" onclick="event.stopPropagation();viewPhoto(\''+photo.replace(/'/g,"\\'")+'\')" />';
+      }
+    }catch(e){}
+  }
+}
+
+// ── OVERVIEW ───────────────────────────────────────────
+function rOverview(){
+  var low=inventory.filter(function(i){return i.qty<=i.minQty&&i.minQty>0;});
+  var today=new Date().toDateString();
+  var tIn=logs.filter(function(l){return l.type==='入库'&&new Date(l.ts).toDateString()===today;}).length;
+  var tOut=logs.filter(function(l){return l.type==='取货'&&new Date(l.ts).toDateString()===today;}).length;
+  var stats=[{l:'货品种类<br/>Items',v:inventory.length,i:'📦',c:'#4a8fff'},{l:'低库存<br/>Low Stock',v:low.length,i:'⚠️',c:'#ff4d6d'},{l:'今日入库<br/>In Today',v:tIn,i:'➕',c:'#00d26a'},{l:'今日取货<br/>Out Today',v:tOut,i:'➖',c:'#ff8c00'}];
+  var h='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:13px">'+
+    stats.map(function(s){return '<div class="card" style="padding:13px"><div style="font-size:18px">'+s.i+'</div><div style="font-size:21px;font-weight:700;color:'+s.c+';font-family:monospace;margin-top:2px">'+s.v+'</div><div style="font-size:11px;color:#64748b;margin-top:1px">'+s.l+'</div></div>';}).join('')+
+    '</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px">'+
+    '<div class="card" style="cursor:pointer;background:#dcfce7;border-color:rgba(0,210,106,.13);text-align:center;padding:15px" onclick="setTab(1)"><div style="font-size:26px;margin-bottom:4px">➕</div><div style="font-weight:700;color:#00d26a">入库<br/><span style="font-size:12px;font-weight:400">Stock In</span></div></div>'+
+    '<div class="card" style="cursor:pointer;background:#fff7ed;border-color:rgba(255,140,0,.13);text-align:center;padding:15px" onclick="setTab(2)"><div style="font-size:26px;margin-bottom:4px">➖</div><div style="font-weight:700;color:#ff8c00">取货<br/><span style="font-size:12px;font-weight:400">Stock Out</span></div></div>'+
+    '</div>';
+  if(low.length>0)h+='<div class="card" style="border-color:rgba(255,77,109,.13);margin-bottom:13px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="color:#ff4d6d;font-size:14px;font-weight:700">⚠️ '+low.length+' 件需要补货</span></div><div style="display:flex;flex-wrap:wrap;gap:5px">'+low.slice(0,5).map(function(i){return '<span class="badge" style="background:#fee2e2;color:#ff4d6d;font-size:11px">'+esc(i.sku)+': '+i.qty+'/'+i.minQty+'</span>';}).join('')+(low.length>5?'<span class="badge" style="background:#e2e8f0;color:#94a3b8;font-size:11px">+'+(low.length-5)+'</span>':'')+'</div></div>';
+  var whOpts=warehouses.map(function(w){return '<option value="'+w.id+'">'+esc(w.name)+'</option>';}).join('');
+  var catVals=[...new Set(inventory.map(function(i){return i.category;}).filter(Boolean))].sort();
+  var catOpts=catVals.map(function(c){return '<option value="'+esc(c)+'">'+esc(c)+'</option>';}).join('');
+  h+='<div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap">'+
+    '<input id="search-in" placeholder="🔍 搜寻料号 / 名称 / 位置..." oninput="filterTable()" style="flex:1;min-width:140px;background:#fff;border:1px solid #d0dae8;border-radius:7px;padding:8px 10px;color:#1e293b;font-size:13px;outline:none"/>'+
+    '<select id="filter-wh" onchange="filterTable()" style="background:#fff;border:1px solid #d0dae8;border-radius:7px;padding:7px 10px;color:#1e293b;font-size:13px;outline:none"><option value="">所有仓库</option>'+whOpts+'</select>'+
+    '<select id="filter-cat" onchange="filterTable()" style="background:#fff;border:1px solid #d0dae8;border-radius:7px;padding:7px 10px;color:#1e293b;font-size:13px;outline:none"><option value="">所有分类</option>'+catOpts+'</select>'+
+    '<select id="filter-low" onchange="filterTable()" style="background:#fff;border:1px solid #d0dae8;border-radius:7px;padding:7px 10px;color:#1e293b;font-size:13px;outline:none"><option value="">全部状态</option><option value="low">⚠️ 低库存</option><option value="ok">✅ 正常</option></select>'+
+    '<select id="sort-by" onchange="filterTable()" style="background:#fff;border:1px solid #d0dae8;border-radius:7px;padding:7px 10px;color:#1e293b;font-size:13px;outline:none"><option value="">排序 Sort</option><option value="sku">料号 SKU ↑</option><option value="name">名称 Name ↑</option><option value="qty-asc">库存 ↑</option><option value="qty-desc">库存 ↓</option><option value="lastIn">最近入库</option><option value="lastOut">最近取货</option></select>'+
+    (me.role==='admin'?'<button class="btn bd" style="font-size:13px;padding:7px 10px" onclick="doExport()">📤</button>':'')+
+    '</div>';
+  h+='<div style="background:#fff;border:1px solid #d0dae8;border-radius:12px;overflow:auto"><table style="min-width:560px"><thead><tr>'+
+    '<th></th><th>料号 SKU</th><th>名称 Name</th><th>库存 Stock</th><th>仓库 WH</th><th>位置 📍</th><th>状态</th>'+
+    (me.role==='admin'?'<th>操作</th>':'')+
+    '</tr></thead><tbody id="inv-tbody">'+rInvRows(inventory)+'</tbody></table></div>'+
+    '<div style="font-size:11px;color:#94a3b8;margin-top:6px;text-align:center">点击行查看详情 · Click row for details</div>';
+  return h;
+}
+function rInvRows(items){
+  if(!items.length)return '<tr><td colspan="8" style="padding:28px;text-align:center;color:#64748b">没有符合结果</td></tr>';
+  var a=me.role==='admin';
+  return items.map(function(item,idx){
+    var isLow=item.qty<=item.minQty&&item.minQty>0;
+    var pct=item.minQty>0?Math.min(item.qty/(item.minQty*3)*100,100):80;
+    var wh=getW(item.warehouseId);
+    var cachedPhoto=photoCache[item.sku];
+    var photoHtml=cachedPhoto
+      ?'<img src="'+cachedPhoto+'" class="photo-thumb" onclick="event.stopPropagation();viewPhoto(\''+cachedPhoto.replace(/'/g,"\\'")+'\')" />'
+      :'<div class="photo-ph" data-photo-sku="'+esc(item.sku)+'">📷</div>';
+    return '<tr style="background:'+(idx%2===0?'transparent':'#f8faff')+';cursor:pointer" onclick="openItemDetail('+item.id+')">'+
+      '<td onclick="event.stopPropagation()">'+photoHtml+'</td>'+
+      '<td style="font-family:monospace;font-size:12px;color:#4a8fff;white-space:nowrap">'+esc(item.sku)+'</td>'+
+      '<td style="font-weight:500;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(item.name)+'</td>'+
+      '<td style="white-space:nowrap"><span style="font-weight:700;color:'+(isLow?'#ff4d6d':'#00d26a')+';font-family:monospace">'+item.qty+'</span><span style="color:#94a3b8;font-size:11px"> '+esc(item.unit)+'</span>'+
+      '<div style="margin-top:2px;height:2px;background:#e2e8f0;border-radius:1px;width:50px"><div style="height:100%;width:'+pct+'%;background:'+(isLow?'#ff4d6d':'#00d26a')+';border-radius:1px"></div></div></td>'+
+      '<td>'+(wh?'<span class="wh-badge">🏭 '+esc(wh.name)+'</span>':'<span style="color:#94a3b8;font-size:12px">—</span>')+'</td>'+
+      '<td>'+(item.location?'<span class="loc-badge">📍 '+esc(item.location)+'</span>':'<span style="color:#94a3b8;font-size:12px">—</span>')+'</td>'+
+      '<td>'+(isLow?'<span class="badge" style="background:#fee2e2;color:#ff4d6d;font-size:11px">⚠️补货</span>':'<span class="badge" style="background:#dcfce7;color:#16a34a;font-size:11px">✅</span>')+'</td>'+
+      (a?'<td onclick="event.stopPropagation()"><div style="display:flex;gap:3px">'+
+        '<button onclick="openQR('+item.id+')" style="padding:3px 6px;background:#e8eef6;border:1px solid #d0dae8;border-radius:5px;color:#64748b;cursor:pointer;font-size:11px">🏷️</button>'+
+        '<button onclick="openEditItem('+item.id+')" style="padding:3px 6px;background:#dbeafe;border:1px solid rgba(74,143,255,.19);border-radius:5px;color:#4a8fff;cursor:pointer;font-size:11px">✏️</button>'+
+        '<button onclick="openDelItem('+item.id+')" style="padding:3px 6px;background:#fee2e2;border:1px solid rgba(255,77,109,.17);border-radius:5px;color:#ff4d6d;cursor:pointer;font-size:11px">🗑️</button>'+
+        '</div></td>':'')+
+      '</tr>';
+  }).join('');
+}
+function filterTable(){
+  var q=(document.getElementById('search-in')||{value:''}).value.toLowerCase();
+  var wf=(document.getElementById('filter-wh')||{value:''}).value;
+  var cf=(document.getElementById('filter-cat')||{value:''}).value;
+  var lf=(document.getElementById('filter-low')||{value:''}).value;
+  var sf=(document.getElementById('sort-by')||{value:''}).value;
+  var filtered=inventory.filter(function(i){
+    if(wf&&String(i.warehouseId)!==wf)return false;
+    if(cf&&i.category!==cf)return false;
+    if(lf==='low'&&!(i.qty<=i.minQty&&i.minQty>0))return false;
+    if(lf==='ok'&&(i.qty<=i.minQty&&i.minQty>0))return false;
+    return i.name.toLowerCase().indexOf(q)>=0||i.sku.toLowerCase().indexOf(q)>=0||(i.category||'').toLowerCase().indexOf(q)>=0||(i.location||'').toLowerCase().indexOf(q)>=0||((getW(i.warehouseId)||{name:''}).name.toLowerCase().indexOf(q)>=0);
+  });
+  if(sf==='sku')filtered=filtered.slice().sort(function(a,b){return a.sku.localeCompare(b.sku);});
+  else if(sf==='name')filtered=filtered.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
+  else if(sf==='qty-asc')filtered=filtered.slice().sort(function(a,b){return a.qty-b.qty;});
+  else if(sf==='qty-desc')filtered=filtered.slice().sort(function(a,b){return b.qty-a.qty;});
+  else if(sf==='lastIn')filtered=filtered.slice().sort(function(a,b){return (b.lastIn||0)-(a.lastIn||0);});
+  else if(sf==='lastOut')filtered=filtered.slice().sort(function(a,b){return (b.lastOut||0)-(a.lastOut||0);});
+  var tb=document.getElementById('inv-tbody');
+  if(tb){tb.innerHTML=rInvRows(filtered);loadVisiblePhotos();}
+}
+async function openItemDetail(id){
+  var item=inventory.find(function(i){return i.id===id;});if(!item)return;
+  var isLow=item.qty<=item.minQty&&item.minQty>0;
+  var wh=getW(item.warehouseId),sup=getSup(item.supplierId);
+  var il=logs.filter(function(l){return l.sku===item.sku;}).slice(0,8);
+  var photo=await loadPhoto(item.sku);
+  var h='<div style="background:#f1f5fb;border-radius:10px;padding:13px;margin-bottom:13px">'+
+    (photo?'<img src="'+photo+'" style="width:100%;max-height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;cursor:pointer" onclick="viewPhoto(\''+photo+'\')"/>':'')+
+    '<div style="font-family:monospace;color:#4a8fff;font-size:13px;margin-bottom:3px">'+esc(item.sku)+'</div>'+
+    '<div style="font-size:17px;font-weight:700;margin-bottom:10px">'+esc(item.name)+'</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">'+
+    '<div style="background:#fff;border-radius:8px;padding:9px"><div style="font-size:11px;color:#64748b">现有库存</div><div style="font-size:22px;font-weight:700;color:'+(isLow?'#ff4d6d':'#00d26a')+';font-family:monospace">'+item.qty+'</div><div style="font-size:12px;color:#64748b">'+esc(item.unit)+' · 警戒: '+item.minQty+'</div></div>'+
+    '<div style="background:#fff;border-radius:8px;padding:9px"><div style="font-size:11px;color:#64748b">分类</div><div style="font-size:14px;font-weight:600;margin-top:3px">'+esc(item.category||'—')+'</div>'+(item.unitCost?'<div style="font-size:12px;color:#ff8c00;margin-top:2px">💰 $'+item.unitCost+'</div>':'')+'</div>'+
+    '</div>'+
+    ((wh||item.location)?'<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px">'+(wh?'<span class="wh-badge">🏭 '+esc(wh.name)+'</span>':'')+(item.location?'<span class="loc-badge">📍 '+esc(item.location)+'</span>':'')+'</div>':'')+
+    (sup?'<div style="background:#fff;border-radius:7px;padding:8px;margin-bottom:7px;font-size:13px"><span class="sup-tag">🏢 '+esc(sup.name)+'</span>'+(sup.phone?' · 📞 <a href="tel:'+esc(sup.phone)+'" style="color:#4a8fff;text-decoration:none">'+esc(sup.phone)+'</a>':'')+'</div>':'')+
+    (item.note?'<div style="font-size:12px;color:#64748b;background:#fff;padding:6px 9px;border-radius:6px">'+esc(item.note)+'</div>':'')+
+    '</div>'+
+    '<div style="display:flex;gap:5px;margin-bottom:13px;flex-wrap:wrap">'+
+    '<button class="btn bg" style="flex:1;min-width:60px;padding:8px 0;font-size:13px" onclick="cm(\'m-item\');setTab(1)">➕ 入库</button>'+
+    '<button class="btn bo" style="flex:1;min-width:60px;padding:8px 0;font-size:13px" onclick="cm(\'m-item\');prefillOut('+item.id+')">➖ 取货</button>'+
+    (me.role==='admin'?'<button class="btn bb" style="flex:1;min-width:60px;padding:8px 0;font-size:13px" onclick="cm(\'m-item\');openEditItem('+item.id+')">✏️</button><button class="btn br" style="flex:1;min-width:60px;padding:8px 0;font-size:13px" onclick="cm(\'m-item\');openDelItem('+item.id+')">🗑️</button>':'')+
+    '</div>'+
+    '<div class="st">最近记录</div>'+
+    (!il.length?'<div style="color:#64748b;font-size:13px;text-align:center;padding:14px">暂无记录</div>':
+    il.map(function(l){return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #e2e8f0">'+
+      '<span style="font-size:14px">'+(l.type==='入库'?'➕':l.type==='取货'?'➖':'🔄')+'</span>'+
+      '<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">'+esc(l.type)+' <span style="color:'+(l.type==='入库'?'#00d26a':'#ff4d6d')+';font-family:monospace">'+(l.type==='入库'?'+':'-')+l.qty+'</span></div>'+
+      '<div style="font-size:11px;color:#64748b;font-family:monospace">'+fmtT(l.ts)+' · '+esc(l.user)+(l.responsible?' · 👤 '+esc(l.responsible):'')+'</div>'+
+      (l.projectNo?'<div style="font-size:11px;color:#9b6dff">🏗️ '+esc(l.projectNo)+'</div>':'')+
+      '</div></div>';}).join(''));
+  document.getElementById('item-detail').innerHTML=h;om('m-item');
+}
+function prefillOut(id){curTab=2;renderTabs();renderTab();setTimeout(function(){if(outRows.length>0){var sel=document.getElementById('out-sel-'+outRows[0].id);if(sel){sel.value=id;showOutRowStock(outRows[0].id,id);}}},150);}
+function prefillInExist(id){curTab=1;renderTabs();renderTab();setTimeout(function(){switchInMode('exist');},50);setTimeout(function(){var sel=document.getElementById('in-sel');if(sel)sel.value=id;},120);}
+function openQR(id){
+  var item=inventory.find(function(i){return i.id===id;});if(!item)return;
+  var wh=getW(item.warehouseId);
+  document.getElementById('qr-content').innerHTML=
+    '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+encodeURIComponent(item.sku)+'" style="width:140px;height:140px;background:#fff;padding:6px;border-radius:8px"/>'+
+    '<div style="font-family:monospace;color:#4a8fff;margin-top:7px;font-size:14px">'+esc(item.sku)+'</div>'+
+    '<div style="color:#64748b;font-size:12px;margin-top:2px">'+esc(item.name)+'</div>'+
+    (item.location?'<div style="margin-top:4px"><span class="loc-badge">📍 '+esc(item.location)+'</span></div>':'')+
+    (wh?'<div style="margin-top:4px"><span class="wh-badge">🏭 '+esc(wh.name)+'</span></div>':'');
+  om('m-qr');
+}
+async function openEditItem(id){
+  editingItemId=id;
+  var item=inventory.find(function(i){return i.id===id;})||{sku:'',name:'',category:'',unit:'粒',minQty:0,warehouseId:null,location:'',supplierId:null,unitCost:null,note:''};
+  document.getElementById('ie-title').textContent=id?'✏️ 编辑货品':'➕ 新增货品';
+  document.getElementById('ie-sku').value=item.sku||'';document.getElementById('ie-name').value=item.name||'';
+  document.getElementById('ie-cat').value=item.category||'';document.getElementById('ie-unit').value=item.unit||'粒';
+  document.getElementById('ie-min').value=item.minQty||0;document.getElementById('ie-loc').value=item.location||'';
+  document.getElementById('ie-cost').value=item.unitCost||'';document.getElementById('ie-note').value=item.note||'';
+  document.getElementById('ie-wh').innerHTML='<option value="">— 不选择 —</option>'+warehouses.map(function(w){return '<option value="'+w.id+'"'+(item.warehouseId===w.id?' selected':'')+'>'+esc(w.name)+'</option>';}).join('');
+  document.getElementById('ie-sup').innerHTML='<option value="">— 不选择 —</option>'+suppliers.map(function(s){return '<option value="'+s.id+'"'+(item.supplierId===s.id?' selected':'')+'>'+esc(s.name)+'</option>';}).join('');
+  currentItemPhoto=id?(await loadPhoto(item.sku)):null;updatePhotoPreview();
+  document.getElementById('ie-msg').innerHTML='';om('m-item-edit');
+}
+async function doSaveItem(){
+  var item=inventory.find(function(i){return i.id===editingItemId;});
+  var sku=document.getElementById('ie-sku').value.trim().toUpperCase(),name=document.getElementById('ie-name').value.trim(),msg=document.getElementById('ie-msg');
+  if(!sku||!name){msg.innerHTML='<div class="msg er">料号和名称不能为空</div>';return;}
+  var dup=inventory.find(function(i){return i.sku===sku&&i.id!==editingItemId;});
+  if(dup){msg.innerHTML='<div class="msg er">料号 '+esc(sku)+' 已被「'+esc(dup.name)+'」使用</div>';return;}
+  var oldSku=item?item.sku:null;
+  var data={sku:sku,name:name,category:document.getElementById('ie-cat').value.trim(),unit:document.getElementById('ie-unit').value.trim()||'粒',minQty:parseInt(document.getElementById('ie-min').value)||0,location:document.getElementById('ie-loc').value.trim(),unitCost:parseFloat(document.getElementById('ie-cost').value)||null,note:document.getElementById('ie-note').value.trim(),warehouseId:parseInt(document.getElementById('ie-wh').value)||null,supplierId:parseInt(document.getElementById('ie-sup').value)||null};
+  if(item){Object.assign(item,data);if(oldSku&&oldSku!==sku)logs.forEach(function(l){if(l.sku===oldSku)l.sku=sku;});}
+  else{var ni=Object.assign({id:ids.i},data,{qty:0,lastIn:null,lastOut:null});inventory.push(ni);ids.i++;}
+  msg.innerHTML='<div class="msg ok"><span class="spin"></span> 储存中...</div>';
+  var ok1=await saveItems();
+  if(!ok1){msg.innerHTML='<div class="msg er">❌ 储存失败，请重试</div>';return;}
+  var ok2=await savePhoto(sku,currentItemPhoto);
+  if(oldSku&&oldSku!==sku)await sdel('inv_photo:'+oldSku);
+  if(!ok2){msg.innerHTML='<div class="msg wn">⚠️ 货品已储存，但照片储存失败</div>';setTimeout(function(){cm('m-item-edit');setTab(0);},1800);return;}
+  renderHdr();msg.innerHTML='<div class="msg ok">✅ 已储存到 Supabase</div>';
+  setTimeout(function(){cm('m-item-edit');setTab(0);},900);
+}
+function openDelItem(id){
+  deletingItemId=id;var item=inventory.find(function(i){return i.id===id;});if(!item)return;
+  document.getElementById('del-item-lbl').innerHTML='<b>'+esc(item.sku)+'</b> — '+esc(item.name)+'<br/><span style="font-size:12px">库存: '+item.qty+' '+esc(item.unit)+'</span>';
+  om('m-del-item');
+}
+async function doDelItem(){
+  var item=inventory.find(function(i){return i.id===deletingItemId;});if(!item)return;
+  addLog('删除货品',item,item.qty,'删除（库存 '+item.qty+'）');
+  var sku=item.sku;
+  inventory=inventory.filter(function(i){return i.id!==deletingItemId;});
+  await saveItems();await saveLogs();await sdel('inv_photo:'+sku);
+  delete photoCache[sku];cm('m-del-item');toast('已删除「'+item.name+'」','wn');setTab(0);
+}
+
+// ── STOCK IN ──────────────────────────────────────────
+var inNewRows=[],inNewRowId=0;
+function getCats(){return[...new Set(inventory.map(function(i){return i.category;}).filter(Boolean))].sort();}
+function rIn(){
+  var selOpts=inventory.map(function(i){return '<option value="'+i.id+'">'+esc(i.sku)+' | '+esc(i.name)+'（'+i.qty+'）</option>';}).join('');
+  return '<div style="max-width:600px"><h2 style="font-size:17px;font-weight:700;margin-bottom:13px">➕ 入库操作 Stock In</h2>'+
+    '<div style="display:flex;gap:7px;margin-bottom:14px">'+
+    '<button id="in-t-new" class="btn bb" style="flex:1;padding:8px 0;font-size:13px" onclick="switchInMode(\'new\')">新增货品<br/><span style="font-size:10px;font-weight:400">New Item</span></button>'+
+    '<button id="in-t-exist" class="btn bd" style="flex:1;padding:8px 0;font-size:13px" onclick="switchInMode(\'exist\')">现有货品<br/><span style="font-size:10px;font-weight:400">Existing</span></button>'+
+    '</div>'+
+    '<div id="in-f-new">'+
+    '<div id="in-new-rows"></div>'+
+    '<button class="btn bd bw" style="margin-bottom:11px;font-size:13px" onclick="addInNewRow()">➕ 加一行 Add Row</button>'+
+    '<div id="in-msg"></div>'+
+    '<button class="btn bg bw bxl" style="margin-top:6px" onclick="doInNew()">✅ 确认入库 Confirm Stock In</button></div>'+
+    '<div id="in-f-exist" style="display:none"><div style="display:flex;flex-direction:column;gap:11px">'+
+    '<div class="field"><label>选择货品 Select Item *</label>'+
+    '<div style="display:flex;gap:7px;margin-bottom:6px"><button class="btn bd" style="font-size:12px;padding:5px 10px;white-space:nowrap" onclick="openScanner(\'in\')">📷 扫码选货</button></div>'+
+    '<select id="in-sel" style="font-size:14px">'+selOpts+'</select></div>'+
+    '<div class="field"><label>入库数量 Qty In *</label><input id="in-qty2" type="number" min="1" style="font-size:18px"/></div>'+
+    '</div><div id="in-msg2"></div><button class="btn bg bw bxl" style="margin-top:13px" onclick="doInExist()">✅ 确认入库 Confirm Stock In</button></div>'+
+    '</div>';
+}
+function buildInRowHtml(rid){
+  var catOpts=getCats().map(function(c){return '<option>'+esc(c)+'</option>';}).join('');
+  var whOpts='<option value="">— None —</option>'+warehouses.map(function(w){return '<option value="'+w.id+'">'+esc(w.name)+'</option>';}).join('');
+  return '<div id="in-nr-'+rid+'" style="background:#fff;border:1px solid #d0dae8;border-radius:10px;padding:12px;margin-bottom:9px">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
+    '<span style="font-size:12px;color:#64748b;font-weight:600">货品 #'+rid+'</span>'+
+    '<button onclick="removeInNewRow('+rid+')" style="background:none;border:none;color:#ff4d6d;cursor:pointer;font-size:18px">✕</button></div>'+
+    '<div style="display:flex;flex-direction:column;gap:9px">'+
+    '<div class="gr" style="grid-template-columns:1fr 1fr"><div class="field"><label>料号 SKU *</label><input id="in-nr-sku-'+rid+'" style="font-family:monospace" oninput="this.value=this.value.toUpperCase()"/></div><div class="field"><label>名称 Name *</label><input id="in-nr-name-'+rid+'"/></div></div>'+
+    '<div class="gr" style="grid-template-columns:2fr 1fr 1fr"><div class="field"><label>数量 Qty *</label><input id="in-nr-qty-'+rid+'" type="number" min="1" style="font-size:16px"/></div><div class="field"><label>单位 Unit</label><input id="in-nr-unit-'+rid+'" value="粒"/></div><div class="field"><label>最低警戒 Min</label><input id="in-nr-min-'+rid+'" type="number" min="0" placeholder="0"/></div></div>'+
+    '<div class="gr" style="grid-template-columns:1fr 1fr">'+
+    '<div class="field"><label>分类 Category</label><input id="in-nr-cat-'+rid+'" list="in-cat-dl-'+rid+'" placeholder="输入或下拉选择"/><datalist id="in-cat-dl-'+rid+'">'+catOpts+'</datalist></div>'+
+    '<div class="field"><label>位置 📍 Location</label><input id="in-nr-loc-'+rid+'" placeholder="A排3格"/></div></div>'+
+    '<div class="field"><label>仓库 Warehouse</label><select id="in-nr-wh-'+rid+'">'+whOpts+'</select></div>'+
+    '</div></div>';
+}
+function addInNewRow(){
+  var rid=++inNewRowId;inNewRows.push({id:rid});
+  var el=document.getElementById('in-new-rows');if(!el)return;
+  var d=document.createElement('div');d.innerHTML=buildInRowHtml(rid);el.appendChild(d.firstChild);
+}
+function removeInNewRow(rid){inNewRows=inNewRows.filter(function(r){return r.id!==rid;});var el=document.getElementById('in-nr-'+rid);if(el)el.remove();}
+function switchInMode(m){
+  inMode=m;
+  document.getElementById('in-f-new').style.display=m==='new'?'':'none';
+  document.getElementById('in-f-exist').style.display=m==='exist'?'':'none';
+  var tn=document.getElementById('in-t-new'),te=document.getElementById('in-t-exist');
+  if(tn)tn.className='btn '+(m==='new'?'bb':'bd');
+  if(te)te.className='btn '+(m==='exist'?'bb':'bd');
+  if(m==='new'&&inNewRows.length===0)addInNewRow();
+}
+async function doInNew(){
+  var msg=document.getElementById('in-msg');
+  if(!inNewRows.length){msg.innerHTML='<div class="msg er">请至少加一行</div>';return;}
+  var ops=[];
+  for(var i=0;i<inNewRows.length;i++){
+    var rid=inNewRows[i].id;
+    var sku=((document.getElementById('in-nr-sku-'+rid)||{value:''}).value||'').trim().toUpperCase();
+    var name=((document.getElementById('in-nr-name-'+rid)||{value:''}).value||'').trim();
+    var qty=parseInt((document.getElementById('in-nr-qty-'+rid)||{value:0}).value)||0;
+    if(!sku||!name||qty<=0){msg.innerHTML='<div class="msg er">货品 #'+rid+'：料号、名称和数量不能为空</div>';return;}
+    ops.push({sku:sku,name:name,qty:qty,unit:((document.getElementById('in-nr-unit-'+rid)||{value:'粒'}).value||'粒').trim()||'粒',minQty:parseInt((document.getElementById('in-nr-min-'+rid)||{value:0}).value)||0,category:((document.getElementById('in-nr-cat-'+rid)||{value:''}).value||'').trim(),location:((document.getElementById('in-nr-loc-'+rid)||{value:''}).value||'').trim(),warehouseId:parseInt((document.getElementById('in-nr-wh-'+rid)||{value:''}).value)||null});
+  }
+  var now=Date.now();
+  ops.forEach(function(op){
+    var ex=inventory.find(function(i){return i.sku===op.sku;});
+    if(ex){ex.qty+=op.qty;ex.lastIn=now;}
+    else{inventory.push({id:ids.i,sku:op.sku,name:op.name,category:op.category,qty:op.qty,unit:op.unit,minQty:op.minQty,lastIn:now,lastOut:null,supplierId:null,unitCost:null,warehouseId:op.warehouseId,location:op.location,note:''});ids.i++;}
+    addLog('入库',ex||inventory[inventory.length-1],op.qty,'');
+  });
+  msg.innerHTML='<div class="msg ok"><span class="spin"></span> 储存中...</div>';
+  var ok=await saveAll();
+  if(ok){renderHdr();msg.innerHTML='<div class="msg ok">✅ 入库成功 '+ops.length+' 项</div>';inNewRows=[];inNewRowId=0;document.getElementById('in-new-rows').innerHTML='';addInNewRow();}
+  else msg.innerHTML='<div class="msg er">❌ 储存失败，请重试</div>';
+}
+async function doInExist(){
+  var selEl=document.getElementById('in-sel'),qty=parseInt(document.getElementById('in-qty2').value)||0,msg=document.getElementById('in-msg2');
+  var id=parseInt(selEl&&selEl.value)||null;
+  var item=id?inventory.find(function(i){return i.id===id;}):null;
+  if(!item||qty<=0){msg.innerHTML='<div class="msg er">请选择货品并输入数量</div>';return;}
+  item.qty+=qty;item.lastIn=Date.now();
+  addLog('入库',item,qty,'');
+  msg.innerHTML='<div class="msg ok"><span class="spin"></span> 储存中...</div>';
+  var ok=await saveAll();
+  if(ok){renderHdr();msg.innerHTML='<div class="msg ok">✅ 入库 +'+qty+' '+esc(item.unit)+'</div>';var qi=document.getElementById('in-qty2');if(qi)qi.value='';}
+  else msg.innerHTML='<div class="msg er">❌ 储存失败</div>';
+}
+
+// ── STOCK OUT ──────────────────────────────────────────
+function rOut(){
+  var userOpts=users.map(function(u){return '<option value="'+esc(u.name)+'">'+esc(u.name)+'</option>';}).join('');
+  return '<div style="max-width:580px"><h2 style="font-size:17px;font-weight:700;margin-bottom:6px">➖ 取货操作 Stock Out</h2>'+
+    '<div style="font-size:13px;color:#64748b;margin-bottom:11px">支持批量取货 Batch stock-out supported</div>'+
+    '<div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap">'+
+    '<button class="btn bg" style="font-size:13px;padding:7px 12px" onclick="addOutRow()">➕ 加一行 Add Row</button>'+
+    '<button class="btn bd" style="font-size:13px;padding:7px 12px" onclick="openScanner(\'out\')">📷 扫码选货 Scan QR</button>'+
+    '</div>'+
+    '<div id="out-rows"></div>'+
+    '<div id="out-comm-wrap" style="margin-top:11px;display:flex;flex-direction:column;gap:9px">'+
+    '<div class="gr" style="grid-template-columns:1fr 1fr">'+
+    '<div class="field"><label>负责人 Responsible *</label><input id="out-resp" list="out-resp-dl" placeholder="选择或输入"/><datalist id="out-resp-dl">'+userOpts+'</datalist></div>'+
+    '<div class="field"><label>工程编号 Project No.</label><input id="out-proj" placeholder="e.g. PR-2024-001"/></div></div>'+
+    '<div class="field"><label>备注 Remarks *</label><input id="out-rem" placeholder="必填 Required"/></div>'+
+    '</div>'+
+    '<div id="out-msg"></div>'+
+    '<button class="btn bo bw bxl" style="margin-top:13px" onclick="doOut()">✅ 确认取货 Confirm Stock Out</button>'+
+    '</div>';
+}
+function initOutRows(){outRows=[];outRowId=0;addOutRow();}
+function addOutRow(){
+  var rid=++outRowId;outRows.push({id:rid});
+  var selOpts='<option value="">— 选择货品 Select Item —</option>'+inventory.map(function(i){return '<option value="'+i.id+'">'+esc(i.sku)+' | '+esc(i.name)+'（'+i.qty+'）</option>';}).join('');
+  var el=document.getElementById('out-rows');if(!el)return;
+  var div=document.createElement('div');
+  div.id='out-row-'+rid;div.style.cssText='background:#fff;border:1px solid #d0dae8;border-radius:10px;padding:11px;margin-bottom:8px';
+  div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:12px;color:#64748b;font-weight:600"># '+rid+'</span><button onclick="removeOutRow('+rid+')" style="background:none;border:none;color:#ff4d6d;cursor:pointer;font-size:18px;padding:0">✕</button></div>'+
+    '<div style="display:flex;flex-direction:column;gap:8px">'+
+    '<div class="field"><label>货品 Item *</label><select id="out-sel-'+rid+'" onchange="showOutRowStock('+rid+',this.value)" style="font-size:14px">'+selOpts+'</select></div>'+
+    '<div id="out-stock-'+rid+'" style="font-size:12px;color:#64748b;margin-top:-4px"></div>'+
+    '<div class="field"><label>数量 Qty *</label><input id="out-qty-'+rid+'" type="number" min="1" style="font-size:18px"/></div>'+
+    '</div>';
+  el.appendChild(div);
+}
+function removeOutRow(rid){outRows=outRows.filter(function(r){return r.id!==rid;});var el=document.getElementById('out-row-'+rid);if(el)el.remove();}
+function showOutRowStock(rid,val){var el=document.getElementById('out-stock-'+rid);if(!el)return;var id=parseInt(val)||null;var item=id?inventory.find(function(i){return i.id===id;}):null;el.textContent=item?'现有库存: '+item.qty+' '+item.unit:'';}
+function showOutStock(){outRows.forEach(function(r){var sel=document.getElementById('out-sel-'+r.id);if(sel&&sel.value)showOutRowStock(r.id,sel.value);});}
+async function doOut(){
+  var resp=(document.getElementById('out-resp')||{value:''}).value.trim();
+  var proj=(document.getElementById('out-proj')||{value:''}).value.trim();
+  var rem=(document.getElementById('out-rem')||{value:''}).value.trim();
+  var msg=document.getElementById('out-msg');
+  if(!resp){msg.innerHTML='<div class="msg er">负责人为必填</div>';return;}
+  if(!rem){msg.innerHTML='<div class="msg er">备注为必填</div>';return;}
+  var ops=[];
+  for(var i=0;i<outRows.length;i++){
+    var rid=outRows[i].id;
+    var sel=document.getElementById('out-sel-'+rid),qel=document.getElementById('out-qty-'+rid);
+    var id=parseInt(sel&&sel.value)||null,qty=parseInt(qel&&qel.value)||0;
+    var item=id?inventory.find(function(x){return x.id===id;}):null;
+    if(!item||qty<=0)continue;
+    if(item.qty<qty){msg.innerHTML='<div class="msg er">⚠️ 「'+esc(item.name)+'」库存不足（现有'+item.qty+'）</div>';return;}
+    ops.push({item:item,qty:qty});
+  }
+  if(!ops.length){msg.innerHTML='<div class="msg er">请至少填写一行有效取货记录</div>';return;}
+  ops.forEach(function(op){op.item.qty-=op.qty;op.item.lastOut=Date.now();addLog('取货',op.item,op.qty,rem,{responsible:resp,projectNo:proj});});
+  msg.innerHTML='<div class="msg ok"><span class="spin"></span> 储存中...</div>';
+  var ok=await saveAll();
+  if(ok){renderHdr();msg.innerHTML='<div class="msg ok">✅ 取货完成 '+ops.length+' 项</div>';initOutRows();['out-resp','out-proj','out-rem'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});}
+  else msg.innerHTML='<div class="msg er">❌ 储存失败</div>';
+}
+
+// ── ADJUST ─────────────────────────────────────────────
+function rAdj(){
+  var selOpts=inventory.map(function(i){return '<option value="'+i.id+'">'+esc(i.sku)+' | '+esc(i.name)+'（'+i.qty+'）</option>';}).join('');
+  var userOpts=users.map(function(u){return '<option value="'+esc(u.name)+'">'+esc(u.name)+'</option>';}).join('');
+  return '<div style="max-width:480px"><h2 style="font-size:17px;font-weight:700;margin-bottom:13px">🔄 库存调整 Stock Adjustment</h2>'+
+    '<div style="display:flex;flex-direction:column;gap:11px">'+
+    '<div class="field"><label>货品 Item *</label><select id="adj-sel" onchange="showAdjStock()" style="font-size:14px"><option value="">— 选择 Select —</option>'+selOpts+'</select></div>'+
+    '<div id="adj-stock" style="font-size:13px;color:#64748b;padding:7px;background:#f1f5fb;border-radius:7px;min-height:30px"></div>'+
+    '<div class="field"><label>调整后数量 New Qty *</label><input id="adj-qty" type="number" min="0" style="font-size:18px"/></div>'+
+    '<div class="field"><label>负责人 Responsible *</label><input id="adj-resp" list="adj-resp-dl" placeholder="选择或输入"/><datalist id="adj-resp-dl">'+userOpts+'</datalist></div>'+
+    '<div class="field"><label>原因 Reason *</label><input id="adj-rem" placeholder="e.g. 盘点更正 Physical count adjustment"/></div>'+
+    '</div><div id="adj-msg"></div>'+
+    '<button class="btn bpu bw bxl" style="margin-top:13px" onclick="doAdj()">🔄 确认调整 Confirm Adjustment</button></div>';
+}
+function showAdjStock(){var sel=document.getElementById('adj-sel');if(!sel)return;var id=parseInt(sel.value)||null;var item=id?inventory.find(function(i){return i.id===id;}):null;var el=document.getElementById('adj-stock');if(el)el.textContent=item?'现有库存: '+item.qty+' '+item.unit:'';}
+async function doAdj(){
+  var sel=document.getElementById('adj-sel'),qel=document.getElementById('adj-qty');
+  var resp=(document.getElementById('adj-resp')||{value:''}).value.trim();
+  var rem=(document.getElementById('adj-rem')||{value:''}).value.trim();
+  var msg=document.getElementById('adj-msg');
+  var id=parseInt(sel&&sel.value)||null,qty=parseInt(qel&&qel.value);
+  var item=id?inventory.find(function(i){return i.id===id;}):null;
+  if(!item||isNaN(qty)||qty<0){msg.innerHTML='<div class="msg er">请选择货品并输入有效数量</div>';return;}
+  if(!resp){msg.innerHTML='<div class="msg er">负责人为必填</div>';return;}
+  if(!rem){msg.innerHTML='<div class="msg er">请填写调整原因</div>';return;}
+  var diff=qty-item.qty;
+  addLog('盘点调整',item,Math.abs(diff),'调整: '+item.qty+'→'+qty+' '+rem,{responsible:resp});
+  item.qty=qty;item.lastIn=diff>0?Date.now():item.lastIn;
+  msg.innerHTML='<div class="msg ok"><span class="spin"></span> 储存中...</div>';
+  var ok=await saveAll();
+  if(ok){renderHdr();msg.innerHTML='<div class="msg ok">✅ 调整完成 ('+esc(item.name)+': '+qty+')</div>';sel.value='';if(qel)qel.value='';document.getElementById('adj-rem').value='';document.getElementById('adj-resp').value='';document.getElementById('adj-stock').textContent='';}
+  else msg.innerHTML='<div class="msg er">❌ 储存失败</div>';
+}
+
+// ── REPORT ─────────────────────────────────────────────
+function rReport(){
+  var totalItems=inventory.length;
+  var totalVal=inventory.reduce(function(s,i){return s+(i.qty*(i.unitCost||0));},0);
+  var low=inventory.filter(function(i){return i.qty<=i.minQty&&i.minQty>0;});
+  var today=new Date().toDateString();
+  var tIn=logs.filter(function(l){return l.type==='入库'&&new Date(l.ts).toDateString()===today;}).reduce(function(s,l){return s+l.qty;},0);
+  var tOut=logs.filter(function(l){return l.type==='取货'&&new Date(l.ts).toDateString()===today;}).reduce(function(s,l){return s+l.qty;},0);
+  var h='<h2 style="font-size:17px;font-weight:700;margin-bottom:13px">📈 库存报表 Stock Report</h2>'+
+    '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:13px">'+
+    '<div class="card"><div style="font-size:11px;color:#64748b">总货品种类</div><div style="font-size:24px;font-weight:700;color:#4a8fff">'+totalItems+'</div></div>'+
+    '<div class="card"><div style="font-size:11px;color:#64748b">库存总值 Total Value</div><div style="font-size:24px;font-weight:700;color:#00d26a">RM '+totalVal.toFixed(2)+'</div></div>'+
+    '<div class="card"><div style="font-size:11px;color:#64748b">今日入库 In Today</div><div style="font-size:24px;font-weight:700;color:#9b6dff">'+tIn+'</div></div>'+
+    '<div class="card"><div style="font-size:11px;color:#64748b">今日取货 Out Today</div><div style="font-size:24px;font-weight:700;color:#ff8c00">'+tOut+'</div></div>'+
+    '</div>'+
+    '<button class="btn bb" style="margin-bottom:13px;font-size:13px" onclick="doExportReport()">📤 导出库存报表 Export CSV</button>';
+  if(low.length>0)h+='<div class="card" style="border-color:rgba(255,77,109,.13);margin-bottom:13px"><div class="st" style="color:#ff4d6d">⚠️ 低库存 ('+low.length+')</div>'+low.map(function(item){var w=getW(item.warehouseId);return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;font-size:13px"><div><span style="font-family:monospace;color:#4a8fff;font-size:11px">'+esc(item.sku)+'</span><span style="margin-left:7px">'+esc(item.name)+'</span>'+(w?'<span class="wh-badge" style="margin-left:5px">🏭 '+esc(w.name)+'</span>':'')+(item.location?'<span class="loc-badge" style="margin-left:3px">📍 '+esc(item.location)+'</span>':'')+'</div><span style="color:#ff4d6d;font-family:monospace">'+item.qty+'/'+item.minQty+'</span></div>';}).join('')+'</div>';
+  return h;
+}
+function doExportReport(){
+  var csv='\uFEFF料号,名称,分类,库存,单位,最低警戒,库存状态,仓库,位置,供应商,单价,库存值\n'+
+    inventory.map(function(i){
+      var w=getW(i.warehouseId),s=getSup(i.supplierId);
+      var status=i.qty<=i.minQty&&i.minQty>0?'低库存':'正常';
+      var val=(i.qty*(i.unitCost||0)).toFixed(2);
+      return [i.sku,i.name,i.category||'',i.qty,i.unit,i.minQty,status,(w?w.name:''),(i.location||''),(s?s.name:''),(i.unitCost||''),val].join(',');
+    }).join('\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='库存报表_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
+// ── SUPPLIERS ──────────────────────────────────────────
+function rSuppliers(){
+  var h='<h2 style="font-size:17px;font-weight:700;margin-bottom:13px">🏢 供应商 Suppliers</h2>'+
+    '<button class="btn bb" style="margin-bottom:13px;font-size:13px" onclick="openAddSup()">➕ 新增供应商 Add Supplier</button>'+
+    '<div style="display:flex;flex-direction:column;gap:9px">';
+  if(!suppliers.length)h+='<div style="text-align:center;padding:28px;color:#64748b">暂无供应商</div>';
+  suppliers.forEach(function(s){
+    h+='<div class="card"><div style="display:flex;align-items:center;gap:9px">'+
+      '<span style="font-size:20px">🏢</span>'+
+      '<div style="flex:1"><div style="font-weight:600;font-size:14px">'+esc(s.name)+'</div>'+
+      (s.contact?'<div style="font-size:12px;color:#64748b">👤 '+esc(s.contact)+'</div>':'')+
+      (s.phone?'<div style="font-size:12px;color:#4a8fff"><a href="tel:'+esc(s.phone)+'" style="color:inherit;text-decoration:none">📞 '+esc(s.phone)+'</a></div>':'')+
+      (s.email?'<div style="font-size:12px;color:#64748b">✉️ '+esc(s.email)+'</div>':'')+
+      '</div>'+
+      '<div style="display:flex;gap:4px"><button class="btn bd" style="padding:3px 7px;font-size:12px" onclick="openEditSup('+s.id+')">✏️</button>'+
+      '<button class="btn br" style="padding:3px 7px;font-size:12px" onclick="doDelSup('+s.id+')">🗑️</button></div></div></div>';
+  });
+  h+='</div>';return h;
+}
+function openAddSup(){editingSupplierId=null;document.getElementById('sup-title').textContent='🏢 新增供应商';['sup-name','sup-contact','sup-phone','sup-email','sup-note'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});document.getElementById('sup-msg').innerHTML='';om('m-sup');}
+function openEditSup(id){editingSupplierId=id;var s=suppliers.find(function(x){return x.id===id;});if(!s)return;document.getElementById('sup-title').textContent='✏️ 编辑供应商';document.getElementById('sup-name').value=s.name||'';document.getElementById('sup-contact').value=s.contact||'';document.getElementById('sup-phone').value=s.phone||'';document.getElementById('sup-email').value=s.email||'';document.getElementById('sup-note').value=s.note||'';document.getElementById('sup-msg').innerHTML='';om('m-sup');}
+async function doSaveSupplier(){
+  var name=document.getElementById('sup-name').value.trim(),msg=document.getElementById('sup-msg');
+  if(!name){msg.innerHTML='<div class="msg er">名称不能为空</div>';return;}
+  if(editingSupplierId){var s=suppliers.find(function(x){return x.id===editingSupplierId;});if(s){s.name=name;s.contact=document.getElementById('sup-contact').value.trim();s.phone=document.getElementById('sup-phone').value.trim();s.email=document.getElementById('sup-email').value.trim();s.note=document.getElementById('sup-note').value.trim();}}
+  else{suppliers.push({id:ids.s,name:name,contact:document.getElementById('sup-contact').value.trim(),phone:document.getElementById('sup-phone').value.trim(),email:document.getElementById('sup-email').value.trim(),note:document.getElementById('sup-note').value.trim()});ids.s++;}
+  msg.innerHTML='<div class="msg ok">⏳ 储存中...</div>';await saveCore();msg.innerHTML='<div class="msg ok">✅ 已储存</div>';setTimeout(function(){cm('m-sup');setTab(5);},900);
+}
+async function doDelSup(id){
+  if(!confirm('确认删除此供应商？'))return;
+  suppliers=suppliers.filter(function(s){return s.id!==id;});
+  await saveCore();setTab(5);
+}
+
+// ── WAREHOUSES ─────────────────────────────────────────
+function rWarehouses(){
+  var h='<h2 style="font-size:17px;font-weight:700;margin-bottom:13px">🏭 仓库 Warehouses</h2>'+
+    '<button class="btn bb" style="margin-bottom:13px;font-size:13px" onclick="openAddWH()">➕ 新增仓库 Add Warehouse</button>'+
+    '<div style="display:flex;flex-direction:column;gap:9px">';
+  if(!warehouses.length)h+='<div style="text-align:center;padding:28px;color:#64748b">暂无仓库</div>';
+  warehouses.forEach(function(w){
+    var cnt=inventory.filter(function(i){return i.warehouseId===w.id;}).length;
+    h+='<div class="card"><div style="display:flex;align-items:center;gap:9px">'+
+      '<span style="font-size:20px">🏭</span>'+
+      '<div style="flex:1"><div style="font-weight:600;font-size:14px">'+esc(w.name)+'</div>'+
+      (w.addr?'<div style="font-size:12px;color:#64748b">📍 '+esc(w.addr)+'</div>':'')+
+      (w.mgr?'<div style="font-size:12px;color:#64748b">👤 '+esc(w.mgr)+'</div>':'')+
+      '<div style="font-size:12px;color:#4a8fff">📦 '+cnt+' 种货品</div>'+
+      '</div>'+
+      '<div style="display:flex;gap:4px"><button class="btn bd" style="padding:3px 7px;font-size:12px" onclick="openEditWH('+w.id+')">✏️</button>'+
+      '<button class="btn br" style="padding:3px 7px;font-size:12px" onclick="doDelWH('+w.id+')">🗑️</button></div></div></div>';
+  });
+  h+='</div>';return h;
+}
+function openAddWH(){editingWhId=null;document.getElementById('wh-title').textContent='🏭 新增仓库';['wh-name','wh-addr','wh-mgr','wh-note'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});document.getElementById('wh-msg').innerHTML='';om('m-wh');}
+function openEditWH(id){editingWhId=id;var w=warehouses.find(function(x){return x.id===id;});if(!w)return;document.getElementById('wh-title').textContent='✏️ 编辑仓库';document.getElementById('wh-name').value=w.name||'';document.getElementById('wh-addr').value=w.addr||'';document.getElementById('wh-mgr').value=w.mgr||'';document.getElementById('wh-note').value=w.note||'';document.getElementById('wh-msg').innerHTML='';om('m-wh');}
+async function doSaveWH(){
+  var name=document.getElementById('wh-name').value.trim(),msg=document.getElementById('wh-msg');
+  if(!name){msg.innerHTML='<div class="msg er">名称不能为空</div>';return;}
+  if(editingWhId){var w=warehouses.find(function(x){return x.id===editingWhId;});if(w){w.name=name;w.addr=document.getElementById('wh-addr').value.trim();w.mgr=document.getElementById('wh-mgr').value.trim();w.note=document.getElementById('wh-note').value.trim();}}
+  else{warehouses.push({id:ids.w,name:name,addr:document.getElementById('wh-addr').value.trim(),mgr:document.getElementById('wh-mgr').value.trim(),note:document.getElementById('wh-note').value.trim()});ids.w++;}
+  msg.innerHTML='<div class="msg ok">⏳ 储存中...</div>';await saveCore();msg.innerHTML='<div class="msg ok">✅ 已储存</div>';setTimeout(function(){cm('m-wh');setTab(6);},900);
+}
+async function doDelWH(id){
+  if(!confirm('确认删除此仓库？货品不会受影响。'))return;
+  warehouses=warehouses.filter(function(w){return w.id!==id;});
+  inventory.forEach(function(i){if(i.warehouseId===id)i.warehouseId=null;});
+  await saveCore();await saveItems();setTab(6);
+}
+
+// ── MANAGE ──────────────────────────────────────────────
+function rManage(){
+  return '<h2 style="font-size:17px;font-weight:700;margin-bottom:13px">🔧 系统管理 System</h2>'+
+    '<div style="display:flex;flex-direction:column;gap:10px">'+
+    '<div class="card"><div class="st">数据导出 Export</div>'+
+    '<button class="btn bb" onclick="doExport()">📤 导出 CSV</button></div>'+
+    '<div class="card"><div class="st" style="color:#ff4d6d">⚠️ 危险操作</div>'+
+    '<button class="btn br" onclick="confirmClearLogs()">🗑️ 清除全部操作记录</button></div>'+
+    '</div>';
+}
+function confirmClearLogs(){
+  if(logs.length===0){toast('操作记录已经是空的','wn');return;}
+  if(!confirm('⚠️ 确认清除全部 '+logs.length+' 条操作记录？'))return;
+  clearLogs();
+}
+
+// ── MANAGE ──────────────────────────────────────────────
+function rManage(){
+  return '<h2 style="font-size:17px;font-weight:700;margin-bottom:13px">🔧 系统管理 System</h2>'+
+    '<div style="display:flex;flex-direction:column;gap:10px">'+
+    '<div class="card"><div class="st">数据导出 Export</div>'+
+    '<button class="btn bb" onclick="doExport()">📤 导出完整数据 CSV</button></div>'+
+    '</div>';
+}
+function doExport(){
+  var inv='料号,名称,分类,库存,单位,最低警戒,仓库,位置,供应商\n'+inventory.map(function(i){return [i.sku,i.name,(i.category||''),i.qty,i.unit,i.minQty,((getW(i.warehouseId)||{name:''}).name),(i.location||''),((getSup(i.supplierId)||{name:''}).name)].join(',');}).join('\n');
+  var lg='\n\n操作记录\n时间,类型,料号,名称,数量,负责人,工程编号,备注,操作员\n'+logs.map(function(l){return [fmtT(l.ts),l.type,l.sku,l.name,l.qty,(l.responsible||''),(l.projectNo||''),(l.remark||''),l.user].join(',');}).join('\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+inv+lg],{type:'text/csv;charset=utf-8;'}));a.download='完整数据_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
+// ── ACCOUNTS ───────────────────────────────────────────
+function rUsers(){
+  var pending=pwReqs.filter(function(r){return r.status==='待处理';});
+  var h='<h2 style="font-size:17px;font-weight:700;margin-bottom:13px">👥 账号管理 Account Management</h2>';
+  if(pending.length>0)h+='<div class="card" style="border-color:rgba(255,140,0,.2);margin-bottom:13px"><div class="st" style="color:#ff8c00">🔔 密码重置申请 ('+pending.length+')</div>'+pending.map(function(req){return '<div style="background:#f1f5fb;border-radius:7px;padding:10px 12px;display:flex;align-items:center;gap:9px;border:1px solid #d0dae8;margin-bottom:6px"><div style="font-size:20px">🔑</div><div style="flex:1"><div style="font-weight:600;font-size:14px">'+esc(req.name)+'</div><div style="font-size:11px;color:#64748b;font-family:monospace">'+esc(req.username)+' · '+fmtT(req.ts)+'</div></div><div style="display:flex;gap:5px"><button class="btn" style="padding:4px 9px;background:#dcfce7;border:1px solid rgba(0,210,106,.19);color:#16a34a;font-size:12px;font-weight:600" onclick="handlePwReset(\''+req.id+'\',\''+esc(req.username)+'\')">✏️ 重置</button><button class="btn" style="padding:4px 7px;background:#fee2e2;border:1px solid rgba(255,77,109,.13);color:#ff4d6d;font-size:12px" onclick="ignorePwReq(\''+req.id+'\')">忽略</button></div></div>';}).join('')+'</div>';
+  h+='<div style="margin-bottom:16px"><div class="st">现有账号 ('+users.length+')</div><div style="display:flex;flex-direction:column;gap:7px">'+users.map(function(u){return '<div class="card" style="padding:13px"><div style="display:flex;align-items:center;gap:9px"><div style="font-size:20px">'+u.avatar+'</div><div style="flex:1"><div style="font-weight:600;font-size:14px">'+esc(u.name)+(u.id===me.id?'<span class="badge" style="font-size:10px;margin-left:5px">你</span>':'')+'</div><div style="font-size:11px;color:#64748b;font-family:monospace">'+esc(u.username)+'</div></div><span class="badge" style="background:'+(u.role==='admin'?'#fef9c3':'#dbeafe')+';color:'+(u.role==='admin'?'#a16207':'#2563eb')+'">'+(u.role==='admin'?'👑 Admin':'👷 Staff')+'</span><div style="display:flex;gap:4px"><button class="btn bd" style="padding:3px 7px;font-size:12px" onclick="openEditUser('+u.id+')">✏️</button><button class="btn br" style="padding:3px 7px;font-size:12px" onclick="openDelUser('+u.id+')">🗑️</button></div></div></div>';}).join('')+'</div></div>';
+  h+='<div class="card"><div class="st">➕ 新增账号 Add Account</div><div style="display:flex;flex-direction:column;gap:10px"><div class="gr" style="grid-template-columns:1fr 1fr"><div class="field"><label>用户名 Username *</label><input id="nu-u" style="font-family:monospace"/></div><div class="field"><label>显示名称 Name *</label><input id="nu-n"/></div></div><div class="field"><label>角色 Role</label><select id="nu-r"><option value="staff">👷 员工</option><option value="admin">👑 管理员</option></select></div><div class="gr" style="grid-template-columns:1fr 1fr"><div class="field"><label>密码 Password *</label><input id="nu-pw" type="password"/></div><div class="field"><label>确认密码 Confirm *</label><input id="nu-pw2" type="password"/></div></div></div><div id="nu-msg"></div><button class="btn bb bw" style="margin-top:11px" onclick="doAddUser()">➕ 新增账号 Add Account</button></div>';
+  return h;
+}
+function openEditUser(id){editingUserId=id;var u=users.find(function(x){return x.id===id;});if(!u)return;document.getElementById('eu-uname').textContent='用户名：'+u.username;document.getElementById('eu-name').value=u.name;document.getElementById('eu-role').value=u.role;document.getElementById('eu-pw').value='';document.getElementById('eu-pw2').value='';document.getElementById('eu-msg').innerHTML='';om('m-eu');}
+async function doSaveUser(){
+  var u=users.find(function(x){return x.id===editingUserId;});if(!u)return;
+  var name=document.getElementById('eu-name').value.trim(),role=document.getElementById('eu-role').value,pw=document.getElementById('eu-pw').value,pw2=document.getElementById('eu-pw2').value,msg=document.getElementById('eu-msg');
+  if(!name){msg.innerHTML='<div class="msg er">名称不能为空</div>';return;}
+  if(pw&&pw!==pw2){msg.innerHTML='<div class="msg er">两次密码不一致</div>';return;}
+  if(pw&&pw.length<4){msg.innerHTML='<div class="msg er">密码最少4位</div>';return;}
+  if(u.role==='admin'&&role==='staff'&&users.filter(function(x){return x.role==='admin';}).length<=1){msg.innerHTML='<div class="msg er">至少保留一个管理员</div>';return;}
+  u.name=name;u.role=role;u.avatar=role==='admin'?'👑':'👷';if(pw)u.password=pw;
+  if(me.id===editingUserId){me.name=name;me.role=role;}
+  msg.innerHTML='<div class="msg ok">⏳ 储存中...</div>';
+  await saveCore();msg.innerHTML='<div class="msg ok">✅ 已储存</div>';setTimeout(function(){cm('m-eu');setTab(curTab);},1100);
+}
+function openDelUser(id){deletingUserId=id;document.getElementById('du-lbl').textContent='「'+(users.find(function(x){return x.id===id;})||{name:'?'}).name+'」账号将永久删除';om('m-du');}
+async function doDelUser(){
+  var u=users.find(function(x){return x.id===deletingUserId;});
+  if(u&&u.role==='admin'&&users.filter(function(x){return x.role==='admin';}).length<=1){alert('不能删除最后一个管理员');return;}
+  if(deletingUserId===me.id){alert('不能删除自己的账号');return;}
+  users=users.filter(function(x){return x.id!==deletingUserId;});
+  pwReqs=pwReqs.filter(function(r){return r.username!==(u?u.username:'');});
+  await saveCore();cm('m-du');setTab(curTab);
+}
+async function doAddUser(){
+  var u=(document.getElementById('nu-u')||{value:''}).value.trim(),n=(document.getElementById('nu-n')||{value:''}).value.trim(),pw=(document.getElementById('nu-pw')||{value:''}).value,pw2=(document.getElementById('nu-pw2')||{value:''}).value,r=(document.getElementById('nu-r')||{value:'staff'}).value,msg=document.getElementById('nu-msg');
+  if(!u||!n||!pw){msg.innerHTML='<div class="msg er">请填写所有必填栏位</div>';return;}
+  if(pw!==pw2){msg.innerHTML='<div class="msg er">两次密码不一致</div>';return;}
+  if(pw.length<4){msg.innerHTML='<div class="msg er">密码最少4位</div>';return;}
+  if(users.find(function(x){return x.username===u;})){msg.innerHTML='<div class="msg er">用户名已存在</div>';return;}
+  users.push({id:ids.u,username:u,password:pw,name:n,role:r,avatar:r==='admin'?'👑':'👷'});ids.u++;
+  msg.innerHTML='<div class="msg ok">⏳ 储存中...</div>';await saveCore();
+  msg.innerHTML='<div class="msg ok">✅ 成功新增「'+esc(n)+'」</div>';renderHdr();
+  ['nu-u','nu-n','nu-pw','nu-pw2'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  setTimeout(function(){setTab(curTab);},1400);
+}
+async function handlePwReset(reqId,username){var u=users.find(function(x){return x.username===username;});if(!u)return;var req=pwReqs.find(function(r){return String(r.id)===String(reqId);});if(req)req.status='已处理';await saveCore();openEditUser(u.id);}
+async function ignorePwReq(reqId){var req=pwReqs.find(function(r){return String(r.id)===String(reqId);});if(req)req.status='已忽略';await saveCore();setTab(curTab);renderHdr();}
+
+// ── CHANGE PASSWORD ────────────────────────────────────
+function rChgPw(){
+  return '<div style="max-width:400px"><h2 style="font-size:17px;font-weight:700;margin-bottom:13px">🔑 更改密码 Change Password</h2><div class="card">'+
+    '<div style="display:flex;align-items:center;gap:9px;margin-bottom:13px;padding:8px 11px;background:#f1f5fb;border-radius:8px"><span style="font-size:22px">'+me.avatar+'</span><div><div style="font-weight:600">'+esc(me.name)+'</div><div style="font-size:11px;color:#64748b;font-family:monospace">'+esc(me.username)+'</div></div></div>'+
+    '<div style="display:flex;flex-direction:column;gap:10px"><div class="field"><label>现有密码 Current Password *</label><input id="cpw-c" type="password"/></div><div class="field"><label>新密码 New Password *</label><input id="cpw-n1" type="password"/></div><div class="field"><label>确认新密码 Confirm *</label><input id="cpw-n2" type="password"/></div></div>'+
+    '<div id="cpw-msg"></div><button class="btn bb bw" style="margin-top:11px" onclick="doChgPw()">🔑 确认更改 Confirm Change</button></div></div>';
+}
+async function doChgPw(){
+  var c=(document.getElementById('cpw-c')||{value:''}).value,n1=(document.getElementById('cpw-n1')||{value:''}).value,n2=(document.getElementById('cpw-n2')||{value:''}).value,msg=document.getElementById('cpw-msg');
+  if(!c||!n1||!n2){msg.innerHTML='<div class="msg er">请填写所有栏位</div>';return;}
+  if(c!==me.password){msg.innerHTML='<div class="msg er">现有密码错误</div>';return;}
+  if(n1!==n2){msg.innerHTML='<div class="msg er">两次新密码不一致</div>';return;}
+  if(n1.length<4){msg.innerHTML='<div class="msg er">密码最少4位</div>';return;}
+  var u=users.find(function(x){return x.id===me.id;});if(u){u.password=n1;me.password=n1;}
+  msg.innerHTML='<div class="msg ok">⏳ 储存中...</div>';await saveCore();
+  msg.innerHTML='<div class="msg ok">✅ 密码已更新</div>';setTimeout(function(){msg.innerHTML='';},3000);
+}
+
+// ── LOGS ───────────────────────────────────────────────
+function rLogs(){
+  var fl=getFLogs();
+  return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px">'+
+    '<h2 style="font-size:17px;font-weight:700">📋 操作记录 Activity Logs</h2>'+
+    '<div style="display:flex;align-items:center;gap:8px">'+
+    '<span style="font-size:12px;color:#64748b">共 '+fl.length+' 笔</span>'+
+    '<button class="btn bb" style="font-size:12px;padding:5px 10px" onclick="doExportLogs()">📤 导出</button>'+
+    '</div></div>'+
+    '<div class="card" style="margin-bottom:11px;padding:11px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+    '<div><label style="display:block;font-size:11px;color:#64748b;margin-bottom:3px">类型 Type</label><select onchange="logF.type=this.value;refLogs()" style="width:100%;background:#f8fafc;border:1px solid #d0dae8;border-radius:7px;padding:7px 9px;font-size:13px;outline:none"><option value="">全部 All</option><option value="入库">入库 Stock In</option><option value="取货">取货 Stock Out</option><option value="盘点调整">盘点调整 Adj</option><option value="删除货品">删除 Delete</option></select></div>'+
+    '<div><label style="display:block;font-size:11px;color:#64748b;margin-bottom:3px">搜寻 Search</label><input value="'+esc(logF.q)+'" oninput="logF.q=this.value;refLogs()" placeholder="料号/名称/负责人..." style="width:100%;background:#f8fafc;border:1px solid #d0dae8;border-radius:7px;padding:7px 9px;font-size:13px;outline:none;box-sizing:border-box"/></div>'+
+    '<div><label style="display:block;font-size:11px;color:#64748b;margin-bottom:3px">开始日期 From</label><input type="date" value="'+logF.from+'" oninput="logF.from=this.value;refLogs()" style="width:100%;background:#f8fafc;border:1px solid #d0dae8;border-radius:7px;padding:7px 9px;font-size:13px;outline:none;box-sizing:border-box"/></div>'+
+    '<div><label style="display:block;font-size:11px;color:#64748b;margin-bottom:3px">结束日期 To</label><input type="date" value="'+logF.to+'" oninput="logF.to=this.value;refLogs()" style="width:100%;background:#f8fafc;border:1px solid #d0dae8;border-radius:7px;padding:7px 9px;font-size:13px;outline:none;box-sizing:border-box"/></div>'+
+    '</div>'+(logF.type||logF.q||logF.from||logF.to?'<button class="btn" style="margin-top:7px;font-size:12px;padding:3px 9px;background:#fee2e2;border:1px solid rgba(255,77,109,.13);color:#ff4d6d" onclick="logF={type:\'\',from:\'\',to:\'\',q:\'\'};setTab(curTab)">✕ 清除筛选</button>':'')+'</div>'+
+    (!fl.length?'<div style="text-align:center;color:#64748b;padding:44px">没有符合条件的记录</div>':'<div id="log-list">'+rLogItems(fl)+'</div>');
+}
+function doExportLogs(){
+  var fl=getFLogs();
+  if(!fl.length){toast('没有记录可导出','wn');return;}
+  var csv='\uFEFF时间,类型,料号,名称,数量,负责人,工程编号,备注,操作员\n'+
+    fl.map(function(l){return [fmtT(l.ts),l.type,l.sku,l.name,l.qty,(l.responsible||''),(l.projectNo||''),(l.remark||''),l.user].join(',');}).join('\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='操作记录_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+function getFLogs(){
+  return logs.filter(function(l){
+    if(logF.type&&l.type!==logF.type)return false;
+    var q=logF.q.toLowerCase();
+    if(q&&l.sku.toLowerCase().indexOf(q)<0&&l.name.toLowerCase().indexOf(q)<0&&(l.responsible||'').toLowerCase().indexOf(q)<0&&(l.projectNo||'').toLowerCase().indexOf(q)<0)return false;
+    if(logF.from&&new Date(l.ts)<new Date(logF.from))return false;
+    if(logF.to&&new Date(l.ts)>new Date(logF.to+'T23:59:59'))return false;
+    return true;
+  });
+}
+function rLogItems(fl){
+  return fl.map(function(log){
+    var tc=log.type==='入库'?'#00d26a':log.type==='取货'?'#ff4d6d':log.type==='删除货品'?'#ff4d6d':'#9b6dff';
+    var ti=log.type==='入库'?'➕':log.type==='取货'?'➖':log.type==='删除货品'?'🗑️':'🔄';
+    return '<div style="background:#fff;border:1px solid #d0dae8;border-radius:9px;padding:8px 12px;display:flex;align-items:center;gap:9px;margin-bottom:6px">'+
+      '<div style="width:28px;height:28px;border-radius:6px;flex-shrink:0;background:'+tc+'18;display:flex;align-items:center;justify-content:center;font-size:14px">'+ti+'</div>'+
+      '<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(log.name)+'</div>'+
+      '<div style="font-size:11px;color:#64748b;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(log.sku)+' · '+fmtT(log.ts)+' · '+esc(log.user)+'</div>'+
+      (log.responsible?'<div style="font-size:11px;color:#4a8fff">👤 '+esc(log.responsible)+(log.projectNo?' · 🏗️ '+esc(log.projectNo):'')+'</div>':'')+
+      (log.remark?'<div style="font-size:11px;color:#64748b">'+esc(log.remark)+'</div>':'')+
+      '</div>'+
+      '<div style="text-align:right;flex-shrink:0"><div style="font-weight:700;font-size:14px;font-family:monospace;color:'+tc+'">'+(log.type==='入库'?'+':log.type==='取货'?'-':'~')+log.qty+'</div><span class="badge" style="background:'+tc+'18;color:'+tc+';font-size:11px">'+esc(log.type)+'</span></div></div>';
+  }).join('');
+}
+function refLogs(){var fl=getFLogs();var el=document.getElementById('log-list');if(el)el.innerHTML=rLogItems(fl);}
+
+// ── EXCEL / CSV 批量入库 ────────────────────────────────
+function dlTemplate(){
+  var csv='\uFEFFSKU,名称 Name,分类 Category,数量 Qty,单位 Unit,最低警戒 Min Qty\nABC-001,零件名称,分类,10,粒,5\n';
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='入库模板.csv';a.click();
+}
+function rExcelImport(){
+  return '<div style="max-width:680px">'+
+    '<h2 style="font-size:17px;font-weight:700;margin-bottom:4px">📊 Excel / CSV 批量入库</h2>'+
+    '<div style="font-size:13px;color:#64748b;margin-bottom:14px">上传 CSV 文件批量入库，支持新增和累加现有库存</div>'+
+    '<div class="card" style="margin-bottom:12px;background:#f8fafc">'+
+    '<div style="font-size:13px;font-weight:600;margin-bottom:6px">📋 CSV 格式要求</div>'+
+    '<div style="font-size:12px;color:#64748b;line-height:1.8">栏位顺序：<b>SKU · 名称 · 分类 · 数量 · 单位 · 最低警戒</b><br/>SKU 和数量必填 · 已有 SKU 自动累加库存<br/>Excel 另存为 CSV (UTF-8) 格式上传</div>'+
+    '<button class="btn bd" style="margin-top:10px;font-size:12px" onclick="dlTemplate()">⬇️ 下载 CSV 模板</button>'+
+    '</div>'+
+    '<div class="card" style="margin-bottom:12px">'+
+    '<div id="xl-drop" onclick="document.getElementById(\'xl-file\').click()" '+
+    'ondragover="event.preventDefault();this.style.borderColor=\'#4a8fff\';this.style.background=\'#eff6ff\'" '+
+    'ondragleave="this.style.borderColor=\'#d0dae8\';this.style.background=\'\'" '+
+    'ondrop="event.preventDefault();this.style.borderColor=\'#d0dae8\';this.style.background=\'\';handleXLDrop(event)" '+
+    'style="border:2px dashed #d0dae8;border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:.2s">'+
+    '<div style="font-size:38px;margin-bottom:8px">📊</div>'+
+    '<div style="font-size:14px;font-weight:600;margin-bottom:4px">点击上传 CSV 文件</div>'+
+    '<div style="font-size:12px;color:#94a3b8">或拖放文件到此处</div>'+
+    '</div>'+
+    '<input id="xl-file" type="file" accept=".csv,text/csv" style="display:none" onchange="handleXLFile(this.files[0])"/>'+
+    '</div>'+
+    '<div id="xl-preview" style="display:none"></div>'+
+    '<div id="xl-msg"></div>'+
+    '</div>';
+}
+function handleXLDrop(e){var f=e.dataTransfer.files[0];if(f)handleXLFile(f);}
+function handleXLFile(file){
+  if(!file)return;
+  if(!file.name.match(/\.csv$/i)){document.getElementById('xl-msg').innerHTML='<div class="msg er">请上传 .csv 文件</div>';return;}
+  var r=new FileReader();
+  r.onload=function(e){parseCSV(e.target.result,file.name);};
+  r.readAsText(file,'UTF-8');
+}
+function parseCSV(text,fname){
+  var lines=text.replace(/\r/g,'').split('\n').filter(function(l){return l.trim();});
+  if(lines.length<2){document.getElementById('xl-msg').innerHTML='<div class="msg er">CSV 内容为空或格式错误</div>';return;}
+  var rows=lines.slice(1).map(function(line){
+    var cols=line.split(',').map(function(c){return c.trim().replace(/^"|"$/g,'');});
+    return {sku:(cols[0]||'').toUpperCase(),name:cols[1]||'',category:cols[2]||'',qty:parseFloat(cols[3])||0,unit:cols[4]||'粒',minQty:parseInt(cols[5])||0};
+  }).filter(function(r){return r.sku&&r.qty>0;});
+  if(!rows.length){document.getElementById('xl-msg').innerHTML='<div class="msg er">没有找到有效数据（SKU 和数量为必填）</div>';return;}
+  var prev=document.getElementById('xl-preview');
+  prev.style.display='';
+  var trows=rows.map(function(r){
+    var ex=inventory.find(function(i){return i.sku===r.sku;});
+    var status=ex
+      ?'<span class="badge" style="background:#dbeafe;color:#2563eb;font-size:11px">🔄 累加 '+ex.qty+'→'+(ex.qty+r.qty)+'</span>'
+      :'<span class="badge" style="background:#dcfce7;color:#16a34a;font-size:11px">➕ 新增</span>';
+    return '<tr><td style="font-family:monospace;color:#4a8fff;font-size:12px">'+esc(r.sku)+'</td>'+
+      '<td style="font-size:13px">'+esc(r.name)+'</td>'+
+      '<td style="font-family:monospace;font-weight:700;color:#00d26a">+'+r.qty+'</td>'+
+      '<td style="font-size:12px;color:#64748b">'+esc(r.unit)+'</td>'+
+      '<td>'+status+'</td></tr>';
+  }).join('');
+  var rowsJson=JSON.stringify(rows).replace(/</g,'\\u003c').replace(/>/g,'\\u003e');
+  prev.innerHTML='<div class="card" style="margin-bottom:12px">'+
+    '<div style="font-size:14px;font-weight:700;margin-bottom:10px">📋 预览（'+rows.length+' 行）</div>'+
+    '<div style="overflow-x:auto"><table style="min-width:400px"><thead><tr>'+
+    '<th>料号 SKU</th><th>名称</th><th>入库数量</th><th>单位</th><th>状态</th>'+
+    '</tr></thead><tbody>'+trows+'</tbody></table></div>'+
+    '<div style="display:flex;gap:9px;margin-top:13px">'+
+    '<button class="btn bd" style="flex:1" onclick="document.getElementById(\'xl-preview\').style.display=\'none\'">← 重新上传</button>'+
+    '<button class="btn bg" style="flex:3;font-size:15px;padding:13px 0;border-radius:12px" onclick="doXLImport('+rowsJson+')">✅ 确认入库 ('+rows.length+' 行)</button>'+
+    '</div></div>';
+}
+async function doXLImport(rows){
+  var msg=document.getElementById('xl-msg');
+  var added=0,updated=0;
+  var now=Date.now();
+  rows.forEach(function(r){
+    var ex=inventory.find(function(i){return i.sku===r.sku;});
+    if(ex){ex.qty+=r.qty;ex.lastIn=now;if(r.minQty>0)ex.minQty=r.minQty;updated++;}
+    else{inventory.push({id:ids.i,sku:r.sku,name:r.name||r.sku,category:r.category,qty:r.qty,unit:r.unit||'粒',minQty:r.minQty,lastIn:now,lastOut:null,supplierId:null,unitCost:null,warehouseId:null,location:'',note:''});ids.i++;added++;}
+    addLog('入库',ex||inventory[inventory.length-1],r.qty,'CSV批量入库');
+  });
+  msg.innerHTML='<div class="msg ok"><span class="spin"></span> 储存到 Supabase...</div>';
+  var ok=await saveAll();
+  if(ok){
+    renderHdr();
+    document.getElementById('xl-preview').style.display='none';
+    document.getElementById('xl-file').value='';
+    msg.innerHTML='<div class="msg ok" style="padding:14px">'+
+      '<div style="font-size:16px;font-weight:700;margin-bottom:6px">✅ 批量入库完成！</div>'+
+      '<div style="font-size:13px">📦 新增 <b style="color:#16a34a">'+added+'</b> 件 &nbsp;|&nbsp; 🔄 更新 <b style="color:#4a8fff">'+updated+'</b> 件</div>'+
+      '<button class="btn bb" style="margin-top:10px;font-size:13px" onclick="setTab(0)">→ 查看库存</button>'+
+      '</div>';
+  }else msg.innerHTML='<div class="msg er">❌ 储存失败，请重试</div>';
+}
+
+
+// ── START ─────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
